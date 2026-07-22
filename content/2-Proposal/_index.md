@@ -1,112 +1,181 @@
 ---
 title: "Proposal"
-date: 2024-01-01
+date: 2026-04-17
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
-
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+# Travel Platform
+## An AWS-Based Platform for Travel Discovery and Trip Planning
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+
+Travel Platform is a cloud-based web application that brings destination discovery, saved places, trip planning, itinerary management, reviews, and booking workflows into one system. It also provides dedicated functions for business owners and administrators. The project is designed for a five-member internship team, with a practical scope that can be implemented, demonstrated, and maintained within the internship period.
+
+The frontend is delivered through Amazon CloudFront and Amazon S3. Amazon Cognito manages user authentication, while Amazon API Gateway provides the entry point for backend requests. AWS Lambda runs the application logic and background workers. Amazon RDS for PostgreSQL stores relational data, Amazon ElastiCache for Redis accelerates frequently accessed queries, and a separate S3 bucket stores uploaded images. Amazon EventBridge, Amazon SQS, and Amazon SNS support asynchronous processing, while Amazon CloudWatch provides centralized logs and monitoring.
+
+The solution follows a modular serverless architecture. Responsibilities are separated into clear application modules, but the backend remains a unified platform behind one API layer. This design reduces operational complexity while allowing the team to gain hands-on experience with networking, serverless compute, managed databases, caching, messaging, security, and observability on AWS.
 
 ### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+#### Current Challenges
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+Travel planning is often fragmented across search engines, review platforms, maps, spreadsheets, and messaging applications. Users spend time moving information between tools, and it is difficult to keep saved places, daily schedules, booking details, and trip notes synchronized.
+
+The platform must also solve several technical challenges:
+
+- Store and retrieve place, review, booking, trip, and itinerary data efficiently.
+- Protect user and business information with authentication and role-based access.
+- Keep image uploads and background jobs from slowing down interactive requests.
+- Support customer, business-owner, and administrator workflows in one consistent system.
+- Maintain reasonable infrastructure costs for development and demonstration.
+
+#### Proposed Solution
+
+Travel Platform provides a unified experience where users can discover places, save favorites, create trips, arrange itinerary items by day, submit reviews, and manage bookings. Business owners can manage their listings and respond to customer activity, while administrators can review users, places, claims, and reports.
+
+The platform uses managed AWS services to reduce infrastructure maintenance. CloudFront and S3 deliver the frontend, Cognito and API Gateway protect API access, and Lambda handles business logic. PostgreSQL stores transactional data, Redis caches frequently requested information, and S3 stores user-uploaded images. SQS, SNS, and EventBridge move slow or event-driven tasks to asynchronous workers.
+
+#### Expected Benefits
+
+- **Unified planning experience:** Saved places, trips, itineraries, reviews, and bookings are managed in one platform.
+- **Responsive application:** Cache and asynchronous workers reduce latency for user-facing operations.
+- **Secure architecture:** Authentication, least-privilege permissions, private data subnets, and encrypted secrets protect sensitive resources.
+- **Scalable foundation:** Managed services can handle increasing traffic without maintaining long-running application servers.
+- **Practical learning value:** The team applies real AWS architecture, infrastructure-as-code, monitoring, and cloud security practices.
 
 ### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+![Travel Platform solution architecture](/images/5-Workshop/target-architecture.jpg)
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+The architecture is organized into layers, with each layer responsible for a specific part of the platform.
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+#### Edge and Frontend Layer
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+Users access the application through Amazon CloudFront. The static frontend is stored in Amazon S3 and distributed through CloudFront for faster delivery and controlled access to the origin.
 
-### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+#### Authentication and API Layer
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+Amazon Cognito manages sign-up, sign-in, and token-based authentication. Amazon API Gateway validates and routes authorized requests to the Lambda API Handler.
 
-### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+#### Compute Layer
 
-### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+The Lambda API Handler processes synchronous operations such as retrieving places, saving favorites, creating trips, updating itineraries, submitting reviews, and managing bookings. A separate Async Worker processes queued or event-driven tasks without delaying API responses.
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+#### Data Layer
 
-Total: $0.7/month, $8.40/12 months
+Amazon RDS for PostgreSQL stores users, places, reviews, saved places, trips, itinerary items, bookings, claims, and administrative records. Redis caches high-read data and temporary values. User-uploaded images are stored in a dedicated S3 bucket.
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+#### Messaging and Monitoring Layer
 
-### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+Amazon SQS provides reliable buffering for background work, Amazon SNS supports event fan-out, and Amazon EventBridge coordinates scheduled or event-based workflows. Amazon CloudWatch collects logs, metrics, and alarms. IAM, KMS, Secrets Manager, and X-Ray strengthen access control, encryption, secret storage, and request tracing.
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+### 4. AWS Services Used
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+| AWS service | Purpose in the platform |
+| --- | --- |
+| Amazon CloudFront | Distributes the frontend and improves content delivery performance. |
+| Amazon S3 | Hosts frontend assets and stores uploaded travel images. |
+| Amazon Cognito | Provides user authentication and token-based access control. |
+| Amazon API Gateway | Exposes secured API endpoints and routes requests to Lambda. |
+| AWS Lambda | Runs the API Handler and asynchronous worker. |
+| Amazon RDS for PostgreSQL | Stores relational and transactional application data. |
+| Amazon ElastiCache for Redis | Caches frequently accessed data to reduce database load. |
+| Amazon SQS | Queues background tasks for reliable processing. |
+| Amazon SNS | Publishes notifications or events to multiple consumers. |
+| Amazon EventBridge | Coordinates scheduled tasks and event-driven workflows. |
+| Amazon CloudWatch | Centralizes logs, metrics, dashboards, and alarms. |
+| AWS IAM | Enforces least-privilege permissions between services. |
+| AWS KMS | Supports encryption for sensitive resources. |
+| AWS Secrets Manager | Stores database credentials and application secrets. |
+| AWS X-Ray | Traces requests through the API and dependent services. |
 
-### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+### 5. Component Design
+
+#### Frontend Application
+
+The responsive web interface provides place search, place details, saved places, trip creation, itinerary planning, reviews, bookings, business-owner pages, and administrative screens. Static assets are hosted in S3 and delivered through CloudFront.
+
+#### Trip Planner Service
+
+Trip Planner Service manages Saved Places, Trips, and Itinerary data. It validates user ownership, stores trip information, organizes activities by date and order, and provides APIs used by the corresponding frontend screens.
+
+#### Platform API Handler
+
+The main Lambda handler contains shared platform logic for users, places, reviews, bookings, business claims, and administration. It validates Cognito identity and permissions before accessing PostgreSQL or Redis.
+
+#### Asynchronous Worker
+
+The worker processes notifications, image-related tasks, synchronization jobs, and other operations received from SQS, SNS, or EventBridge. Failed messages can be retried or redirected to a dead-letter queue for investigation.
+
+#### Data and Image Storage
+
+PostgreSQL stores normalized application data and relationships. Redis stores cache entries and temporary values that can be reconstructed. S3 stores image files, while their metadata and ownership information remain in PostgreSQL.
+
+### 6. Technical Implementation
+
+#### Implementation Phases
+
+1. **Requirements and design:** Define user roles, core workflows, data model, API contracts, and the AWS architecture.
+2. **Infrastructure foundation:** Provision networking, security groups, Cognito, S3, CloudFront, API Gateway, Lambda, PostgreSQL, Redis, and monitoring resources with AWS CDK.
+3. **Backend development:** Implement APIs for places, saved places, trips, itineraries, reviews, bookings, business functions, and administration.
+4. **Frontend development:** Build the user, business-owner, and administrator interfaces and connect them to the APIs.
+5. **Asynchronous integration:** Add SQS, SNS, and EventBridge workflows for background processing and notifications.
+6. **Testing and deployment:** Run integration and end-to-end tests, review IAM and networking, optimize cost, fix defects, and deploy the final demonstration environment.
+
+#### Technical Requirements
+
+- **Frontend:** React, TypeScript, Tailwind CSS, responsive design, and authenticated API calls.
+- **Backend:** TypeScript, AWS Lambda, AWS SDK, validation, and service-oriented application modules.
+- **Data:** PostgreSQL, DynamoDB Single Table where appropriate for Trip Planner data, Redis caching, and S3 object storage.
+- **Infrastructure:** AWS CDK for repeatable infrastructure deployment.
+- **Security:** Amazon Cognito, IAM least privilege, encrypted secrets, private subnets for data services, and controlled S3 access.
+- **Quality:** Automated tests, structured logging, CloudWatch alarms, and documented cleanup procedures.
+
+### 7. Timeline and Milestones
+
+| Period | Main activities |
+| --- | --- |
+| Weeks 1–2 | Learn AWS fundamentals, IAM, networking, and core compute services. |
+| Weeks 3–4 | Practice storage, Lambda, DynamoDB, API Gateway, and serverless design. |
+| Weeks 5–6 | Study managed databases, caching, monitoring, DNS, and supporting services. |
+| Week 7 | Finalize team scope, user roles, requirements, and task assignments. |
+| Week 8 | Design the system architecture, database model, and API contracts. |
+| Week 9 | Implement business-owner and listing-management functions. |
+| Week 10 | Implement booking and customer workflow functions. |
+| Week 11 | Implement administrator dashboards and management functions. |
+| Week 12 | Perform integration testing, fix defects, complete documentation, and prepare the final demonstration. |
+
+### 8. Budget Estimation
+
+The project targets a learning and demonstration environment. Costs should be minimized by using small resource sizes, short testing windows, Free Tier allowances where applicable, and immediate cleanup after demonstrations.
+
+| Cost area | Cost-control approach |
+| --- | --- |
+| Lambda and API Gateway | Use on-demand execution and low demo traffic. |
+| S3 and CloudFront | Store only necessary assets and apply suitable cache settings. |
+| RDS PostgreSQL | Use a small Single-AZ instance during development. |
+| Redis | Use the smallest practical cache node and stop testing promptly. |
+| Messaging services | Keep SQS, SNS, and EventBridge message volume low. |
+| CloudWatch | Set log retention and avoid unnecessary verbose logging. |
+| Secrets and encryption | Create only the secrets and keys required by the application. |
+
+AWS Budgets alerts should be configured before deployment. Unused databases, cache nodes, NAT-related resources, and test data must be removed after the project is completed.
+
+### 9. Risk Assessment
+
+| Risk | Impact | Mitigation |
+| --- | --- | --- |
+| Incorrect VPC or security-group configuration | High | Review subnet placement, routes, and inbound/outbound rules before integration. |
+| Lambda cannot reach PostgreSQL or Redis | High | Test private connectivity early and monitor connection errors in CloudWatch. |
+| Unauthorized access to data or images | High | Apply Cognito authorization, IAM least privilege, encryption, and controlled upload URLs. |
+| Background messages fail repeatedly | Medium | Configure retries, dead-letter queues, idempotent handlers, and alarms. |
+| Infrastructure cost exceeds the demo budget | Medium | Use AWS Budgets, small resources, limited test duration, and cleanup scripts. |
+| Project scope becomes too large | Medium | Prioritize place discovery, saved places, trips, itineraries, reviews, and booking workflows. |
+
+### 10. Expected Outcomes
+
+The completed Travel Platform should provide a functional cloud-hosted demonstration where users can discover and save places, create trips, organize itineraries, submit reviews, and manage bookings. Business owners and administrators should be able to perform their assigned management workflows through dedicated interfaces.
+
+The project should also demonstrate the team's ability to design AWS architecture, deploy infrastructure as code, secure API access, connect serverless compute to managed data services, use asynchronous messaging, monitor workloads, and collaborate effectively in a cloud development project.

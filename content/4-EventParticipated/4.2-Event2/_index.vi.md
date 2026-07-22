@@ -1,12 +1,18 @@
 ---
 title: "Sự kiện 2"
-date: 2024-01-01
-weight: 1
+date: 2026-05-30
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
 # Tóm tắt sự kiện 2
+
+| Thông tin | Chi tiết |
+| --- | --- |
+| **Ngày** | 30/05/2026 |
+| **Địa điểm** | Tầng 26, Bitexco Tower, 02 đường Hải Triều, phường Sài Gòn, Thành phố Hồ Chí Minh |
+| **Vai trò** | Người tham dự |
 
 Trong sự kiện, các diễn giả đã chia sẻ nhiều chủ đề khác nhau.
 

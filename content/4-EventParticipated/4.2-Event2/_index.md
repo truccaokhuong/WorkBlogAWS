@@ -1,12 +1,18 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-05-30
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
 # Event 2 Summary
+
+| Info | Details |
+| --- | --- |
+| **Date** | 30/05/2026 |
+| **Location** | 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City |
+| **Role** | Attendee |
 
 During the event, the speakers shared insights on a wide range of topics.
 
