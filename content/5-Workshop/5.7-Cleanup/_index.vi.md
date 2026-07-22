@@ -6,23 +6,23 @@ chapter: false
 pre: " <b> 5.7. </b> "
 ---
 
-### Nguyên tắc Dọn dẹp
+### Nguyên tắc dọn dẹp
 
-Trước khi xóa tài nguyên, tạo backup cho bất kỳ dữ liệu nào cần được giữ lại. Không bao giờ xóa shared VPC, production database hoặc shared S3 bucket chỉ vì nó xuất hiện trong workshop này.
+Trước khi xóa tài nguyên, hãy tạo bản sao lưu cho dữ liệu cần giữ lại. Không xóa VPC dùng chung, cơ sở dữ liệu đang vận hành hoặc vùng lưu trữ S3 dùng chung chỉ vì chúng xuất hiện trong hướng dẫn này.
 
-### Thứ tự Xóa Khuyến nghị
+### Thứ tự xóa khuyến nghị
 
-1. Vô hiệu hóa frontend hosting và custom domain mappings nếu có.
-2. Xóa API Gateway sau khi xác nhận không còn clients nào sử dụng endpoint.
-3. Xóa Lambda functions, unused layers và log groups theo chính sách retention.
-4. Dọn sạch S3 buckets artifact/test-upload cụ thể cho workshop, sau đó xóa nếu không còn cần thiết.
-5. Tạo snapshot cuối cùng trước khi xóa database RDS test.
-6. Xóa tài nguyên ElastiCache Redis.
-7. Xóa Security Groups, IAM roles/policies và VPC resources chỉ sau khi xác nhận chúng không được chia sẻ.
+1. Vô hiệu hóa dịch vụ lưu trữ giao diện và ánh xạ tên miền tùy chỉnh nếu có.
+2. Xóa API Gateway sau khi xác nhận không còn ứng dụng nào sử dụng các điểm cuối.
+3. Xóa các hàm Lambda, lớp không còn dùng và nhóm nhật ký theo chính sách lưu giữ.
+4. Làm trống các vùng lưu trữ S3 dùng riêng cho gói triển khai hoặc tệp kiểm thử, sau đó xóa nếu không còn cần thiết.
+5. Tạo ảnh chụp dữ liệu cuối cùng trước khi xóa cơ sở dữ liệu RDS dùng cho kiểm thử.
+6. Xóa tài nguyên ElastiCache for Redis.
+7. Chỉ xóa nhóm bảo mật, vai trò và chính sách IAM cùng tài nguyên VPC sau khi xác nhận chúng không được dùng chung.
 
-### Kiểm tra Sau Dọn dẹp
+### Kiểm tra sau khi dọn dẹp
 
-* Kiểm tra AWS Billing/Cost Explorer sau 24 giờ để đảm bảo không có chi phí bất thường.
-* Kiểm tra các CloudWatch log groups còn sót lại.
-* Kiểm tra S3 buckets, RDS snapshots và Elastic IPs không sử dụng.
+* Kiểm tra AWS Billing hoặc Cost Explorer sau 24 giờ để đảm bảo không có chi phí bất thường.
+* Kiểm tra các nhóm nhật ký CloudWatch còn sót lại.
+* Kiểm tra vùng lưu trữ S3, ảnh chụp RDS và địa chỉ Elastic IP không sử dụng.
 * Ghi lại danh sách tài nguyên đã xóa trong báo cáo bàn giao.

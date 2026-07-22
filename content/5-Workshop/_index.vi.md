@@ -1,37 +1,37 @@
 ---
-title: "Workshop"
+title: "Hướng dẫn triển khai"
 date: 2024-01-01
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
 
-Chương này trình bày workshop triển khai dự án **VTrips** trên AWS. Nội dung dựa trên README workshop của nhóm, ảnh chụp màn hình triển khai và sơ đồ kiến trúc hệ thống.
+Chương này hướng dẫn triển khai dự án **VTrips** trên AWS, dựa trên tài liệu của nhóm, ảnh chụp quá trình triển khai và sơ đồ kiến trúc hệ thống.
 
-Workshop được tổ chức theo trình tự rõ ràng: bối cảnh và mục tiêu dự án, mô tả kiến trúc, yêu cầu tiên quyết, triển khai, kiểm thử, demo sản phẩm và dọn dẹp tài nguyên.
+Nội dung được trình bày theo trình tự: bối cảnh và mục tiêu dự án, kiến trúc, yêu cầu tiên quyết, các bước triển khai, kiểm thử, trình diễn sản phẩm và dọn dẹp tài nguyên.
 
 **5.1:** [Tổng quan](5.1-Workshop-overview/)
 
-Giới thiệu mục tiêu workshop, phạm vi MVP, các module đã hoàn thành và tiêu chí thành công cho hệ thống VTrips.
+Giới thiệu mục tiêu, phạm vi sản phẩm khả dụng tối thiểu (MVP), các phân hệ đã hoàn thành và tiêu chí thành công của VTrips.
 
-**5.2:** [Mô tả Kiến trúc](5.2-Prerequiste/)
+**5.2:** [Mô tả kiến trúc](5.2-Prerequiste/)
 
-Giải thích sơ đồ kiến trúc, các tầng hệ thống, luồng request chính, dịch vụ AWS sử dụng, bảo mật, logging/monitoring và lộ trình tiến hóa production.
+Giải thích sơ đồ kiến trúc, các tầng hệ thống, luồng yêu cầu chính, dịch vụ AWS, bảo mật, ghi log, giám sát và lộ trình phát triển cho môi trường vận hành thực tế.
 
 **5.3:** [Yêu cầu tiên quyết](5.3-S3-vpc/)
 
-Liệt kê tài khoản AWS, quyền IAM, region, công cụ local và cấu hình môi trường cần thiết trước khi triển khai.
+Liệt kê tài khoản AWS, quyền IAM, Khu vực AWS, công cụ cục bộ và cấu hình môi trường cần thiết trước khi triển khai.
 
-**5.4:** [Hướng dẫn Triển khai](5.4-S3-onprem/)
+**5.4:** [Các bước triển khai](5.4-S3-onprem/)
 
-Cung cấp các bước triển khai: build backend, chuẩn bị database, đóng gói Lambda, cấu hình runtime/API và publish frontend.
+Hướng dẫn biên dịch hệ thống phía máy chủ, chuẩn bị cơ sở dữ liệu, đóng gói Lambda, cấu hình môi trường chạy và API, sau đó phát hành giao diện người dùng.
 
-**5.5:** [Kiểm thử & Xác thực](5.5-Policy/)
+**5.5:** [Kiểm thử và xác thực](5.5-Policy/)
 
-Xác thực frontend, authentication, APIs, database/cache, tải ảnh, CloudWatch Logs và các vấn đề phổ biến sau triển khai.
+Kiểm tra giao diện, xác thực người dùng, API, cơ sở dữ liệu, bộ nhớ đệm, tải ảnh, nhật ký CloudWatch và các vấn đề thường gặp sau triển khai.
 
-**5.6:** [Demo](5.6-Demo/)
+**5.6:** [Trình diễn](5.6-Demo/)
 
-Demo sản phẩm VTrips qua luồng người dùng cuối (trang chủ, tìm kiếm, địa điểm đã lưu, tạo chuyến đi, đặt chỗ) và góc nhìn doanh nghiệp/quản trị (dashboard, xác minh địa điểm, tổng quan quản trị).
+Trình diễn VTrips qua luồng người dùng cuối và luồng dành cho doanh nghiệp, quản trị viên.
 
 **5.7:** [Dọn dẹp](5.7-Cleanup/)

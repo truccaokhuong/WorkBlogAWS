@@ -45,13 +45,13 @@ weight = 2
 languageName = "Tiếng Việt"
 
 [[Languages.vi.menu.shortcuts]]
-name = "<i class='fab fa-github'></i> GitHub Repository"
+name = "<i class='fab fa-github'></i> Kho mã nguồn GitHub"
 identifier = "GitHub Repository"
 url = "https://github.com/truccaokhuong/truccaokhuong.github.io"
 weight = 10
 
 [[Languages.vi.menu.shortcuts]]
-name = "<i class='fab fa-facebook'></i> AWS Study Group"
+name = "<i class='fab fa-facebook'></i> Nhóm học AWS"
 identifier = "AWS Study Group FB"
 url = "https://www.facebook.com/groups/awsstudygroupfcj/"
 weight = 20

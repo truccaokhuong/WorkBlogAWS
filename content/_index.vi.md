@@ -31,10 +31,10 @@ chapter: false
 
 ### Nội dung báo cáo
 
-1.  [Worklog](1-Worklog/)
-2.  [Proposal](2-Proposal/)
-3.  [Blog Posts](3-BlogsTranslated/)
-4.  [Các events đã tham gia](4-EventParticipated/)
-5.  [Workshop](5-Workshop/)
+1.  [Nhật ký công việc](1-Worklog/)
+2.  [Bản đề xuất](2-Proposal/)
+3.  [Bài viết đã biên dịch](3-BlogsTranslated/)
+4.  [Các sự kiện đã tham gia](4-EventParticipated/)
+5.  [Hướng dẫn triển khai](5-Workshop/)
 6.  [Tự đánh giá](6-Self-evaluation/)
 7.  [Chia sẻ, đóng góp ý kiến](7-Feedback/)

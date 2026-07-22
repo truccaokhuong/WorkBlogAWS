@@ -1,27 +1,27 @@
 ---
-title: "Kiểm thử & Xác thực"
+title: "Kiểm thử và xác thực"
 date: 2024-01-01
 weight: 5
 chapter: false
 pre: " <b> 5.5. </b> "
 ---
 
-### Kiểm tra Chức năng
+### Kiểm tra chức năng
 
-Sau mỗi lần triển khai, xác thực các luồng chính trong môi trường test:
+Sau mỗi lần triển khai, xác thực các luồng chính trong môi trường kiểm thử:
 
 | Luồng | Kết quả mong đợi |
 | --- | --- |
-| Health check | API trả về HTTP 200 và payload hợp lệ |
-| Đăng ký và đăng nhập | API trả về session tokens hợp lệ |
-| Duyệt/tìm kiếm địa điểm | Lọc và phân trang trả về dữ liệu chính xác |
-| Tạo/cập nhật review | Review được lưu và rating tổng hợp được làm mới |
-| Tạo trip | Ngày, thứ tự và ghi chú cho mỗi địa điểm được lưu |
-| Chia sẻ trip công khai | URL công khai hoạt động không cần xác thực |
-| Tạo booking | Booking tuân theo workflow trạng thái mong đợi |
-| Tải ảnh địa điểm | Browser tải lên qua S3 presigned URL ngắn hạn |
+| Kiểm tra tình trạng hệ thống | API trả về HTTP 200 và dữ liệu hợp lệ |
+| Đăng ký và đăng nhập | API trả về mã thông báo phiên hợp lệ |
+| Duyệt và tìm kiếm địa điểm | Bộ lọc và phân trang trả về dữ liệu chính xác |
+| Tạo hoặc cập nhật đánh giá | Đánh giá được lưu và điểm tổng hợp được làm mới |
+| Tạo chuyến đi | Ngày, thứ tự và ghi chú cho từng địa điểm được lưu |
+| Chia sẻ chuyến đi công khai | URL công khai hoạt động mà không cần xác thực |
+| Tạo lượt đặt chỗ | Trạng thái thay đổi theo đúng quy trình |
+| Tải ảnh địa điểm | Trình duyệt tải trực tiếp lên S3 qua URL ký sẵn có thời hạn ngắn |
 
-Ví dụ health check:
+Ví dụ kiểm tra tình trạng hệ thống:
 
 ```powershell
 curl.exe -i https://API_ID.execute-api.REGION.amazonaws.com/health
@@ -29,29 +29,29 @@ curl.exe -i https://API_ID.execute-api.REGION.amazonaws.com/health
 
 ### Xác thực API Gateway
 
-Kiểm tra cấu hình route và stage deployment để đảm bảo API Gateway trỏ đến đúng Lambda integration.
+Kiểm tra cấu hình tuyến và giai đoạn triển khai để đảm bảo API Gateway trỏ đến đúng hàm Lambda.
 
-![API Gateway routes](/images/5-Workshop/06-api-gateway-routes.png)
+![Các tuyến API Gateway](/images/5-Workshop/06-api-gateway-routes.png)
 
-![API Gateway stage](/images/5-Workshop/07-api-stage.png)
+![Giai đoạn triển khai API Gateway](/images/5-Workshop/07-api-stage.png)
 
-### Logs và Chẩn đoán
+### Nhật ký và chẩn đoán
 
-Đối với request thất bại, điều tra theo thứ tự sau:
+Khi một yêu cầu thất bại, hãy điều tra theo thứ tự sau:
 
-1. Mở Lambda CloudWatch log group.
-2. Chọn log stream mới nhất cho timestamp của request.
-3. Xác định lỗi xảy ra trong validation, authorization, database access, Redis access hay S3 signing.
-4. Sửa đơn vị cấu hình hoặc code nhỏ nhất chịu trách nhiệm.
-5. Triển khai lại và lặp lại test tương tự.
+1. Mở nhóm nhật ký Lambda trong CloudWatch.
+2. Chọn luồng nhật ký mới nhất tương ứng với thời điểm xảy ra lỗi.
+3. Xác định lỗi nằm ở kiểm tra dữ liệu, phân quyền, truy cập PostgreSQL, Redis hay ký URL S3.
+4. Sửa phần cấu hình hoặc mã nhỏ nhất gây ra lỗi.
+5. Triển khai lại và lặp lại cùng phép kiểm thử.
 
-![CloudWatch log stream](/images/5-Workshop/21-cloudwatch-log.png)
+![Luồng nhật ký CloudWatch](/images/5-Workshop/21-cloudwatch-log.png)
 
-### Tín hiệu cần Giám sát
+### Tín hiệu cần giám sát
 
-* Lambda errors, duration, throttles và timeouts.
-* API Gateway latency và phản hồi 4xx/5xx.
-* RDS CPU, số lượng kết nối và lỗi kết nối.
-* Redis hit rate và trạng thái kết nối.
-* Lỗi tải lên S3.
-* CloudWatch log retention để tránh chi phí không cần thiết.
+* Số lỗi, thời gian chạy, lượt bị giới hạn và lượt hết thời gian của Lambda.
+* Độ trễ API Gateway và phản hồi 4xx/5xx.
+* CPU, số kết nối và lỗi kết nối RDS.
+* Tỷ lệ dữ liệu tìm thấy trong Redis và trạng thái kết nối.
+* Lỗi tải tệp lên S3.
+* Thời gian lưu nhật ký CloudWatch để tránh chi phí không cần thiết.

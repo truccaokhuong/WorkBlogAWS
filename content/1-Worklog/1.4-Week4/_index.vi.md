@@ -1,5 +1,5 @@
 ---
-title: "Worklog Tuần 4"
+title: "Nhật ký Tuần 4"
 date: 2026-05-08
 weight: 4
 chapter: false
@@ -16,7 +16,7 @@ pre: " <b> 1.4. </b> "
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
 | 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 08/05/2026 | 08/05/2026 |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 09/05/2026 | 09/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 3   | - Tìm hiểu AWS và các nhóm dịch vụ <br>&emsp; + Điện toán <br>&emsp; + Lưu trữ <br>&emsp; + Mạng <br>&emsp; + Cơ sở dữ liệu <br>&emsp; + ... <br>                                            | 09/05/2026 | 09/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 | 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 10/05/2026 | 10/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 11/05/2026 | 12/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 | 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 12/05/2026 | 12/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
@@ -25,10 +25,10 @@ pre: " <b> 1.4. </b> "
 ### Kết quả đạt được tuần 4:
 
 * Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
+  * Điện toán
+  * Lưu trữ
+  * Mạng
+  * Cơ sở dữ liệu
   * ...
 
 * Đã tạo và cấu hình AWS Free Tier account thành công.

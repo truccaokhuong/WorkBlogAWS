@@ -8,25 +8,25 @@ pre: " <b> 5.3. </b> "
 
 ### Yêu cầu AWS
 
-Trước khi triển khai workshop, chuẩn bị:
+Trước khi triển khai, cần chuẩn bị:
 
-* Tài khoản AWS với quyền tạo/cập nhật Lambda, API Gateway, RDS, ElastiCache, S3, IAM roles/policies, VPC/Security Groups và CloudWatch Logs.
-* Region triển khai nhất quán, ví dụ `ap-southeast-2`.
-* S3 bucket cho Lambda artifacts và bucket/lưu trữ ứng dụng cho ảnh tải lên.
-* VPC, subnets và Security Groups cho phép Lambda kết nối đến RDS/Redis.
-* Lambda IAM role với quyền least-privilege.
+* Tài khoản AWS có quyền tạo hoặc cập nhật Lambda, API Gateway, RDS, ElastiCache, S3, vai trò và chính sách IAM, VPC, nhóm bảo mật và nhật ký CloudWatch.
+* Một Khu vực AWS dùng thống nhất, ví dụ `ap-southeast-2`.
+* Vùng lưu trữ S3 cho gói triển khai Lambda và vùng lưu ảnh của ứng dụng.
+* VPC, mạng con và nhóm bảo mật cho phép Lambda kết nối RDS và Redis.
+* Vai trò IAM của Lambda tuân theo nguyên tắc đặc quyền tối thiểu.
 
-### Công cụ Local
+### Công cụ cục bộ
 
-Cài đặt các công cụ sau trên máy local:
+Cài đặt các công cụ sau trên máy:
 
 * Node.js 20 trở lên.
 * npm.
 * AWS CLI v2.
 * Git.
-* PostgreSQL client tools để kiểm tra database.
+* Công cụ kết nối PostgreSQL để kiểm tra cơ sở dữ liệu.
 
-Xác minh toolchain:
+Xác minh bộ công cụ:
 
 ```powershell
 node --version
@@ -35,9 +35,9 @@ aws --version
 aws sts get-caller-identity
 ```
 
-### Cấu hình Môi trường
+### Cấu hình môi trường
 
-Tạo cấu hình môi trường dựa trên file ví dụ của dự án. Không bao giờ commit secrets vào repository.
+Tạo cấu hình môi trường dựa trên tệp ví dụ của dự án. Không đưa thông tin bí mật vào kho mã.
 
 ```env
 NODE_ENV=production
@@ -48,4 +48,4 @@ AWS_REGION=ap-southeast-2
 S3_BUCKET_UPLOADS=replace-with-your-bucket
 ```
 
-Với production, sử dụng Lambda environment variables được bảo vệ hoặc AWS Secrets Manager thay vì lưu trữ credentials trong file local.
+Trong môi trường vận hành thực tế, hãy sử dụng biến môi trường được bảo vệ của Lambda hoặc AWS Secrets Manager thay vì lưu thông tin xác thực trong tệp cục bộ.

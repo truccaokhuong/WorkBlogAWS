@@ -1,13 +1,14 @@
 ---
-title: "Hướng dẫn Triển khai"
+title: "Các bước triển khai"
 date: 2024-01-01
 weight: 4
 chapter: false
 pre: " <b> 5.4. </b> "
 ---
-### 1. Build Backend
 
-Chạy các lệnh sau từ thư mục backend:
+### 1. Biên dịch hệ thống phía máy chủ
+
+Chạy các lệnh sau từ thư mục `backend`:
 
 ```powershell
 cd F:\travel-platform-aws\backend
@@ -16,32 +17,32 @@ npm run build
 npx prisma generate
 ```
 
-![Prisma generate](/images/5-Workshop/prisma-generate.png)
+![Tạo Prisma Client](/images/5-Workshop/prisma-generate.png)
 
-Trước khi publish, chạy kiểm tra local để đảm bảo backend khởi động đúng. Trong môi trường development, ứng dụng có thể fallback về in-memory khi local Redis không khả dụng.
+Trước khi phát hành, hãy kiểm tra cục bộ để đảm bảo hệ thống khởi động đúng. Trong môi trường phát triển, ứng dụng có thể dùng bộ nhớ trong tạm thời khi Redis cục bộ không khả dụng.
 
-![Kiểm tra backend runtime](/images/5-Workshop/12-backend-build.png)
+![Kiểm tra môi trường chạy phía máy chủ](/images/5-Workshop/12-backend-build.png)
 
-### 2. Chuẩn bị Database
+### 2. Chuẩn bị cơ sở dữ liệu
 
-Sau khi cấu hình `DATABASE_URL`, tạo Prisma Client và áp dụng migration production:
+Sau khi cấu hình `DATABASE_URL`, tạo Prisma Client và áp dụng các thay đổi lược đồ cho môi trường vận hành:
 
 ```powershell
 npx prisma generate
 npx prisma migrate deploy
 ```
 
-Sử dụng database không phải production để testing bất cứ khi nào có thể.
+Nên sử dụng cơ sở dữ liệu dành riêng cho kiểm thử, không dùng cơ sở dữ liệu đang vận hành.
 
-### 3. Đóng gói và Publish Lambda
+### 3. Đóng gói và phát hành Lambda
 
-Tạo deployment artifact từ thư mục backend:
+Tạo gói triển khai từ thư mục `backend`:
 
 ```powershell
 Compress-Archive -Path dist,prisma,package.json -DestinationPath function.zip -Force
 ```
 
-Tải artifact lên S3 và cập nhật Lambda function. Thay thế placeholders với tài nguyên thực từ tài khoản AWS đích:
+Tải gói lên S3 và cập nhật hàm Lambda. Thay các giá trị mẫu bằng tài nguyên thật của tài khoản AWS đích:
 
 ```powershell
 aws s3 cp function.zip s3://ARTIFACT_BUCKET/function.zip --region ap-southeast-2
@@ -64,23 +65,23 @@ aws lambda get-function-configuration `
 
 ![Trạng thái cập nhật Lambda](/images/5-Workshop/lambda-update-status.png)
 
-### 4. Cấu hình Runtime và API
+### 4. Cấu hình môi trường chạy và API
 
-Lambda nên được cấu hình với:
+Lambda cần được cấu hình với:
 
-* Node.js 20 runtime.
-* Execution role phù hợp.
-* VPC subnets và Security Groups để truy cập RDS/Redis.
-* Biến môi trường production.
-* Giá trị memory/timeout phù hợp với khối lượng công việc.
+* Môi trường chạy Node.js 20.
+* Vai trò thực thi phù hợp.
+* Mạng con VPC và nhóm bảo mật để truy cập RDS, Redis.
+* Biến môi trường dành cho hệ thống vận hành.
+* Bộ nhớ và thời gian chờ phù hợp với khối lượng công việc.
 
-API Gateway nên được kết nối đến Lambda handler chính xác, cấu hình CORS cho origin frontend và bảo vệ với throttling khi cần.
+API Gateway cần kết nối đúng hàm xử lý Lambda, cấu hình CORS cho miền giao diện và giới hạn lưu lượng khi cần.
 
-![Lambda runtime](/images/5-Workshop/03-lambda-runtime.png)
+![Môi trường chạy Lambda](/images/5-Workshop/03-lambda-runtime.png)
 
-### 5. Publish Frontend
+### 5. Phát hành giao diện người dùng
 
-Thiết lập API URL đã triển khai trước khi build frontend:
+Thiết lập URL API đã triển khai trước khi biên dịch giao diện:
 
 ```env
 NEXT_PUBLIC_API_URL=https://API_ID.execute-api.REGION.amazonaws.com
@@ -92,6 +93,6 @@ npm install
 npm run build
 ```
 
-Frontend có thể được triển khai qua Vercel, AWS Amplify hoặc workflow hosting do nhóm lựa chọn. Sau khi triển khai, xác minh phiên browser, CORS, authentication và tải lên S3 trực tiếp.
+Giao diện có thể được triển khai qua Vercel, AWS Amplify hoặc nền tảng lưu trữ do nhóm lựa chọn. Sau khi triển khai, kiểm tra phiên đăng nhập trên trình duyệt, CORS, xác thực và việc tải tệp trực tiếp lên S3.
 
-![Frontend home](/images/5-Workshop/frontend-home.png)
+![Trang chủ của giao diện](/images/5-Workshop/frontend-home.png)

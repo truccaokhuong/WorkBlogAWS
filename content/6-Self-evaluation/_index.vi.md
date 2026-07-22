@@ -8,7 +8,7 @@ pre: " <b> 6. </b> "
 
 Trong kỳ thực tập tại Công ty TNHH Amazon Web Services Việt Nam từ ngày 17/04/2026 đến ngày 10/07/2026, nhóm gồm năm thành viên của tôi đã có cơ hội học hỏi, thực hành và áp dụng kiến thức về Điện toán đám mây AWS và Phát triển Web trong môi trường phát triển dự án thực tế thông qua đề tài Travel Platform.
 
-Là thành viên phụ trách Trip Planner Service, tôi trực tiếp tham gia thiết kế và phát triển cả back end bằng AWS CDK, DynamoDB Single Table, AWS Lambda, SQS/SNS, đồng thời xây dựng front end cho các màn hình Saved Places, Trips và Itinerary. Qua quá trình này, tôi đã cải thiện đáng kể kỹ năng lập trình hướng dịch vụ, tư duy thiết kế hệ thống serverless trên AWS Cloud và khả năng làm việc nhóm.
+Là thành viên phụ trách Dịch vụ lập kế hoạch chuyến đi (Trip Planner Service), tôi trực tiếp tham gia thiết kế và phát triển hệ thống phía máy chủ bằng AWS CDK, mô hình DynamoDB Single Table, AWS Lambda và SQS/SNS; đồng thời xây dựng giao diện cho các màn hình Địa điểm đã lưu (Saved Places), Chuyến đi (Trips) và Lịch trình (Itinerary). Qua quá trình này, tôi đã cải thiện đáng kể kỹ năng lập trình hướng dịch vụ, tư duy thiết kế hệ thống phi máy chủ trên nền tảng đám mây AWS và khả năng làm việc nhóm.
 
 Để phản ánh khách quan mức độ đóng góp của mình cho dự án, tôi xin tự đánh giá dựa trên các tiêu chí sau:
 

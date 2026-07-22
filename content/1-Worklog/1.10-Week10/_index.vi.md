@@ -1,36 +1,33 @@
 ---
-title: "Worklog Tuần 10"
+title: "Nhật ký Tuần 10"
 date: 2026-06-19
 weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
 
+### Mục tiêu tuần 10
 
-### Mục tiêu tuần 10:
+* Triển khai các màn hình thuộc phân hệ đặt chỗ.
+* Xây dựng luồng tạo và quản lý lượt đặt chỗ.
+* Phát triển trang chi tiết, luồng hủy và vòng đời trạng thái.
+* Đồng bộ thay đổi trạng thái theo thời gian thực.
 
-* Triển khai các màn hình phân hệ Booking: Booking Page và My Bookings.
-* Xây dựng giao diện xem chi tiết booking với timeline trạng thái.
-* Phát triển chức năng hủy booking với luồng xác nhận.
-* Triển khai quản lý state machine cho trạng thái booking.
-* Tích hợp cập nhật booking real-time qua WebSocket.
+### Các công việc cần triển khai trong tuần này
 
-### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
-| --- | --------- | ------------ | --------------- | -------------- |
-| 2 | - **Trang Booking**: <br>&emsp; + Thiết kế date/time picker hiển thị các khung giờ trống <br>&emsp; + Xây dựng bộ chọn số lượng khách và input yêu cầu đặc biệt <br>&emsp; + Triển khai kiểm tra tình trạng còn chỗ real-time để tránh đặt trùng <br>&emsp; + Thêm tóm tắt giá và bước xác nhận trước khi gửi <br>&emsp; + Kết nối đến API endpoint POST /bookings với form validation | 19/06/2026 | 19/06/2026 | React DatePicker, Zod Validation |
-| 3 | - **Trang My Bookings**: <br>&emsp; + Tạo danh sách booking với các tab trạng thái: Tất cả, Pending, Confirmed, Cancelled, Completed <br>&emsp; + Triển khai sắp xếp theo ngày, trạng thái và tên địa điểm <br>&emsp; + Xây dựng component thẻ booking với ảnh địa điểm, ngày, huy hiệu trạng thái và nút thao tác <br>&emsp; + Thêm hình minh họa trạng thái trống cho mỗi tab <br>&emsp; + Kết nối đến API endpoint GET /bookings?user_id=me với phân trang | 20/06/2026 | 20/06/2026 | React Query Pagination, Tailwind Tabs |
-| 4 | - **Trang Chi tiết Booking**: <br>&emsp; + Thiết kế bố cục chi tiết với thông tin địa điểm, thông tin booking và timeline trạng thái <br>&emsp; + Xây dựng component stepper trạng thái: Pending → Confirmed → Completed (hoặc Cancelled) <br>&emsp; + Thêm tùy chọn chỉnh sửa booking dựa trên trạng thái hiện tại <br>&emsp; + Triển khai tạo mã QR cho xác nhận booking <br>&emsp; + Kết nối đến API endpoint GET /bookings/:id | 21/06/2026 | 21/06/2026 | QR Code Library, Timeline UI |
-| 5 | - **Luồng Hủy Booking**: <br>&emsp; + Xây dựng dialog xác nhận với các tùy chọn lý do hủy <br>&emsp; + Triển khai logic nghiệp vụ: chỉ booking ở trạng thái Pending/Confirmed mới có thể hủy <br>&emsp; + Thêm hiển thị chính sách hoàn tiền cho việc hủy booking đã xác nhận <br>&emsp; + Triển khai optimistic UI update với rollback khi thất bại <br>&emsp; + Kết nối đến API endpoint PATCH /bookings/:id/cancel | 22/06/2026 | 22/06/2026 | React Modal, Optimistic Updates |
-| 6 | - **Vòng đời Trạng thái Booking**: <br>&emsp; + Triển khai state machine: Pending → Confirmed (bởi chủ doanh nghiệp), Pending → Cancelled (bởi người dùng), Confirmed → Completed (sau ngày booking), Confirmed → Cancelled (bởi người dùng) <br>&emsp; + Thêm Socket.io listener cho thay đổi trạng thái real-time <br>&emsp; + Xây dựng toast notification cho cập nhật trạng thái <br>&emsp; + Viết automated tests cho tất cả các chuyển đổi trạng thái <br> - Kiểm thử end-to-end toàn bộ luồng booking | 23/06/2026 | 23/06/2026 | XState (state machine), Socket.io, React Hot Toast |
+| --- | --- | --- | --- | --- |
+| 2 | Xây dựng **Trang đặt chỗ** với bộ chọn ngày giờ, số lượng khách, yêu cầu đặc biệt, kiểm tra chỗ trống theo thời gian thực, tóm tắt giá và xác nhận trước khi gửi; kết nối `POST /bookings`. | 19/06/2026 | 19/06/2026 | React DatePicker, Zod |
+| 3 | Xây dựng **Các lượt đặt chỗ của tôi** với các thẻ Tất cả, Chờ xử lý, Đã xác nhận, Đã hủy và Hoàn thành; thêm sắp xếp, phân trang và kết nối `GET /bookings?user_id=me`. | 20/06/2026 | 20/06/2026 | React Query, Tailwind CSS |
+| 4 | Xây dựng **Trang chi tiết đặt chỗ** với thông tin địa điểm, dòng thời gian trạng thái, tùy chọn chỉnh sửa và mã QR xác nhận; kết nối `GET /bookings/:id`. | 21/06/2026 | 21/06/2026 | Thư viện mã QR, thành phần dòng thời gian |
+| 5 | Xây dựng **Luồng hủy đặt chỗ** với hộp thoại xác nhận, lý do hủy, quy tắc nghiệp vụ, chính sách hoàn tiền và cơ chế khôi phục giao diện khi cập nhật thất bại; kết nối `PATCH /bookings/:id/cancel`. | 22/06/2026 | 22/06/2026 | React Modal, cập nhật lạc quan |
+| 6 | Triển khai **vòng đời trạng thái đặt chỗ** từ chờ xử lý đến xác nhận, hoàn thành hoặc hủy; lắng nghe thay đổi bằng Socket.io, hiển thị thông báo và viết kiểm thử tự động, kiểm thử xuyên suốt toàn bộ luồng. | 23/06/2026 | 23/06/2026 | XState, Socket.io, React Hot Toast |
 
+### Kết quả đạt được tuần 10
 
-### Kết quả đạt được tuần 10:
-
-* ✅ **Trang Booking** hoàn chỉnh với date/time picker, kiểm tra tình trạng còn chỗ real-time, chọn số khách và luồng booking nhiều bước.
-* ✅ **Trang My Bookings** hoàn thành với lọc theo tab (5 tab trạng thái), phân trang infinite scroll và bố cục thẻ responsive.
-* ✅ **Trang Chi tiết Booking** cung cấp thông tin booking toàn diện, timeline trạng thái trực quan và mã QR để check-in dễ dàng.
-* ✅ **Luồng Hủy Booking** triển khai với thu thập lý do, xác thực quy tắc nghiệp vụ (chỉ trạng thái Pending/Confirmed) và optimistic UI updates.
-* ✅ **State Machine Vòng đời Trạng thái** xử lý chính xác tất cả 4 chuyển đổi với cập nhật WebSocket real-time và toast notification.
-* ✅ Đã viết 40+ unit test cho logic booking và 15 integration test cho toàn bộ luồng booking từ tạo đến hoàn thành.
-* ✅ Tất cả các màn hình Booking đã triển khai lên staging và vượt qua QA review với không lỗi nghiêm trọng.
+* ✅ Hoàn thành trang đặt chỗ nhiều bước và kiểm tra chỗ trống theo thời gian thực.
+* ✅ Hoàn thành danh sách đặt chỗ với năm trạng thái, phân trang và bố cục thích ứng.
+* ✅ Hoàn thành trang chi tiết, dòng thời gian trạng thái và mã QR.
+* ✅ Hoàn thành luồng hủy với xác thực quy tắc nghiệp vụ và xử lý khi cập nhật thất bại.
+* ✅ Đồng bộ trạng thái theo thời gian thực và hiển thị thông báo cho người dùng.
+* ✅ Viết hơn 40 kiểm thử đơn vị, 15 kiểm thử tích hợp và triển khai các màn hình lên môi trường thử nghiệm để đánh giá chất lượng.
