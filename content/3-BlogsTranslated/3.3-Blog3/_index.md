@@ -1,101 +1,58 @@
 ---
-title: "Blog 3 - Survey of Amazon S3 Storage Classes and Selection Criteria"
+title: "Amazon Bedrock – Generative AI on AWS"
 date: 2024-01-01
 weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-
 {{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
+⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
 {{% /notice %}}
 
-Amazon S3 (Simple Storage Service) is one of the most popular data storage services of Amazon Web Services (AWS), designed with virtually unlimited storage capacity, data durability of up to 99.999999999% (11 nines), and flexible scalability. Rather than offering a single storage form, Amazon S3 is divided into multiple Storage Classes to meet different needs regarding access frequency, performance, retention duration, and cost.
+**Amazon Bedrock** is a fully managed service for building generative AI applications on AWS. Instead of provisioning GPU servers, installing frameworks, and deploying large language models, developers can access **foundation models (FMs)** through APIs. This approach shortens development time and allows teams to focus on application-specific business logic.
 
-Choosing the right storage class not only ensures usage efficiency but also significantly optimizes operational costs. Each Storage Class is designed for a specific data group, from frequently accessed data to long-term archival data for backup or record-keeping purposes.
+Bedrock provides access to model families from multiple providers, including Amazon Titan, Anthropic Claude, Meta Llama, Cohere, and Mistral AI. Applications can evaluate and select a suitable model for each use case without rebuilding the entire AI infrastructure.
 
-## Overview of Amazon S3 Storage Classes
+![AI application architecture using Amazon Bedrock on AWS](/images/blog3/amazon-bedrock-ai-architecture.png)
 
-Amazon S3 currently offers various storage classes, with the most common including:
+### Main Components
 
-- S3 Standard
-- S3 Intelligent-Tiering
-- S3 Standard-Infrequent Access (Standard-IA)
-- S3 One Zone-Infrequent Access (One Zone-IA)
-- S3 Glacier Instant Retrieval
-- S3 Glacier Flexible Retrieval
-- S3 Glacier Deep Archive
+| Component | Role |
+| --- | --- |
+| **Web/Mobile App** | Provides the interface through which users submit requests and receive results. |
+| **Amazon API Gateway** | Accepts application requests, forwards them to the processing layer, and returns responses. |
+| **AWS Lambda** | Validates input, applies business logic, constructs prompts, and invokes the selected model through Amazon Bedrock. |
+| **Amazon Bedrock** | Provides APIs for accessing foundation models and generating content from prompts. |
+| **Amazon S3** | Stores documents or unstructured data needed by the application. |
+| **Amazon DynamoDB** | Stores application data, session state, or interaction history when required. |
+| **Knowledge Bases for Amazon Bedrock** | Retrieves relevant information from data sources to add context for the model. |
+| **Amazon CloudWatch** | Collects logs and metrics and supports alerting, performance monitoring, and troubleshooting. |
 
-These storage classes are categorized by data access frequency, from "Hot Data" that is frequently used to "Cold Data" that is only retrieved in special circumstances.
+### Application Request Flow
 
-## S3 Standard
+A generative AI request moves through the system as follows:
 
-S3 Standard is the default storage class of Amazon S3 and is suitable for frequently accessed data. This is the choice for applications requiring high performance, low latency, and high availability.
+1. The user enters a question or instruction in a website or mobile application.
+2. Amazon API Gateway receives the request and forwards it to AWS Lambda.
+3. Lambda validates the input, executes business logic, and constructs the prompt.
+4. If additional context is required, Lambda or the Bedrock workflow retrieves documents from Amazon S3, data from DynamoDB, or relevant knowledge through a Knowledge Base.
+5. Lambda invokes the foundation model selected by the application through Amazon Bedrock.
+6. The model processes the prompt and returns its output to Lambda.
+7. Lambda may format, validate, or store the output before responding.
+8. API Gateway sends the final answer back to the user interface.
 
-Use cases include: static websites, web applications, mobile applications, storage of continuously accessed images, videos, or documents.
+### Choosing a Foundation Model
 
-The advantages of S3 Standard include millisecond access time, high availability, and data stored across multiple Availability Zones to enhance fault tolerance. However, the storage cost of this class is higher compared to other classes.
+Amazon Bedrock does not restrict an application to one model. Developers can compare foundation models according to response quality and reasoning capability, supported languages and content types, request latency, context-window size, usage cost, and task requirements such as question answering, summarization, content generation, or coding.
 
-## S3 Intelligent-Tiering
+### Knowledge Bases and RAG
 
-S3 Intelligent-Tiering is designed for data with unpredictable or unstable access patterns. The standout feature of this storage class is the ability to automatically move data between storage tiers based on usage levels without user intervention.
+**Retrieval-Augmented Generation (RAG)** combines a foundation model's generation capability with information retrieved from private data sources. Knowledge Bases for Amazon Bedrock supports this workflow, enabling AI applications to use organizational documents rather than relying only on knowledge already available to the model.
 
-If data is frequently accessed, the system maintains it at the high-performance tier. When data becomes less frequently used, Amazon S3 automatically moves it to a lower-cost tier to save budget.
+### Monitoring with Amazon CloudWatch
 
-This storage class is suitable for enterprise data lakes, project documents, and digital content with varying access frequency over time. Although there is an additional object monitoring fee, Intelligent-Tiering significantly reduces storage costs for systems with large data volumes.
+Amazon CloudWatch provides observability for the system. Logs, metrics, and alerts from API Gateway, Lambda, and related components help administrators monitor traffic, latency, and errors, detect failed requests or unusual activity, and investigate causes and resolve incidents more quickly.
 
-## S3 Standard-Infrequent Access (Standard-IA)
+### Conclusion
 
-Standard-IA is designed for data that is infrequently accessed but still requires fast retrieval when needed. Compared to S3 Standard, Standard-IA storage costs are lower; however, users pay an additional fee each time data is retrieved.
-
-Use cases include: data backup, archival records, backup data, and documents accessed only a few times per year. This storage class still ensures data durability equivalent to S3 Standard and data is stored across multiple Availability Zones.
-
-## S3 One Zone-Infrequent Access
-
-One Zone-IA has similar characteristics to Standard-IA but data is stored in only a single Availability Zone. Since there is no data replication mechanism across multiple Availability Zones, storage costs are lower. However, if the Availability Zone experiences a severe failure, data may become unrecoverable.
-
-One Zone-IA is suitable for reproducible data, temporary files, secondary backup data, and content that does not require high availability. This is a reasonable choice when businesses want cost savings and can accept higher risk levels.
-
-## S3 Glacier Instant Retrieval
-
-Glacier Instant Retrieval is for long-term archive data that still needs immediate retrieval when needed. Unlike traditional Glacier classes, retrieval time for Glacier Instant Retrieval is measured in milliseconds, while storage costs are lower than S3 Standard-IA.
-
-This storage class is commonly used for medical records, archived images, multimedia content, and legal data requiring long-term retention.
-
-## S3 Glacier Flexible Retrieval
-
-Glacier Flexible Retrieval targets long-term archive data that does not require frequent access. Users can choose from various retrieval time options, from minutes to hours, depending on needs and desired cost levels.
-
-Common applications include: enterprise record storage, periodic data backup, historical document storage, and audit data. This is a storage class that balances cost and retrieval capability.
-
-## S3 Glacier Deep Archive
-
-Glacier Deep Archive is the lowest-cost storage class in Amazon S3, designed for data that needs to be retained for very long periods and is almost never accessed. Retrieval time can extend to several hours, so this storage class is not suitable for frequently used data.
-
-Use cases include: legal record storage, multi-year data archives, regulatory compliance documents for businesses or government agencies, and long-term backup. This is the appropriate solution when the primary goal is to minimize storage costs.
-
-## Selection Criteria for Choosing the Right Storage Class
-
-Choosing a Storage Class should not be based on cost alone but should consider multiple factors simultaneously.
-
-### Data Access Frequency
-
-This is the most important factor. Frequently accessed data should use S3 Standard or Intelligent-Tiering. For data accessed only a few times per month or per year, Standard-IA or Glacier are more suitable choices.
-
-### Required Data Retrieval Time
-
-If the application requires immediate retrieval, choose classes with millisecond response times such as Standard, Intelligent-Tiering, or Glacier Instant Retrieval. For data that can wait minutes or hours, Glacier Flexible Retrieval or Glacier Deep Archive will significantly save costs.
-
-### Storage Costs and Retrieval Costs
-
-Typically, the lower the storage cost, the higher the retrieval cost. Therefore, consider the trade-off between the number of data accesses and the total cost throughout the data lifecycle.
-
-### Availability Requirements
-
-If data is critical and requires high availability, prioritize storage classes deployed across multiple Availability Zones such as Standard or Standard-IA. In cases where data is reproducible or not critical, One Zone-IA will help reduce costs.
-
-### Data Retention Duration
-
-Short-term data is usually suitable for Standard or Intelligent-Tiering. Conversely, data that needs to be retained for many years but rarely accessed should use Glacier Flexible Retrieval or Glacier Deep Archive to optimize the budget.
-
-The fact that Amazon S3 offers multiple storage classes shows that AWS does not aim for a one-size-fits-all solution but allows users to choose the approach appropriate for each specific need. Understanding the characteristics of each Storage Class helps build a more effective storage strategy, both ensuring data access capability when needed and optimizing system operational costs on the AWS platform.
+Amazon Bedrock significantly reduces the infrastructure that teams must manage when developing generative AI applications. Combined with API Gateway, Lambda, S3, DynamoDB, Knowledge Bases, and CloudWatch, it can serve as the center of a modular AI architecture that is maintainable and scalable.
