@@ -5,10 +5,6 @@ weight: 2
 chapter: false
 pre: " <b> 5.6.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 ### Luồng Doanh nghiệp & Quản trị
 
 Phần này trình bày các màn hình dành cho chủ doanh nghiệp và quản trị viên trong Travel Platform. Các tính năng tập trung vào quản lý hoạt động kinh doanh, yêu cầu xác minh địa điểm và tổng quan hệ thống.

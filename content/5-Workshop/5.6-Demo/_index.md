@@ -5,9 +5,6 @@ weight: 6
 chapter: false
 pre: " <b> 5.6. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
 ### Demo
 

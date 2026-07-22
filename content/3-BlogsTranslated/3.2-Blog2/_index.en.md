@@ -5,9 +5,6 @@ weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
 Selecting suitable services is only the first step in building a cloud-based system. For a system to remain stable, secure, responsive, and scalable over time, its overall architecture must follow clear design principles.
 

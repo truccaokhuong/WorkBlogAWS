@@ -5,10 +5,6 @@ weight: 1
 chapter: false
 pre: " <b> 5.6.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 ### Luồng Trải nghiệm Người dùng
 
 Phần này trình bày các thao tác chính của người dùng cuối trong Travel Platform: truy cập trang chủ, tìm kiếm địa điểm, xem chi tiết địa điểm, lưu địa điểm yêu thích, tạo chuyến đi, quản lý lịch trình và theo dõi trạng thái đặt chỗ.

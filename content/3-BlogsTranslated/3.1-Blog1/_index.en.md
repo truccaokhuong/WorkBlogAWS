@@ -5,9 +5,6 @@ weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
 Amazon Simple Storage Service (Amazon S3) is a highly scalable object storage service offering virtually unlimited capacity and data durability of up to **99.999999999% (11 nines)**. Rather than providing a single storage model, Amazon S3 offers multiple storage classes for different access frequencies, retrieval speeds, availability requirements, retention periods, and cost targets.
 

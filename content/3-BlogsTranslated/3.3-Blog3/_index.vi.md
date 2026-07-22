@@ -5,9 +5,6 @@ weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 **Amazon Bedrock** là dịch vụ được quản lý hoàn toàn để xây dựng ứng dụng generative AI trên AWS. Thay vì cấp phát GPU server, cài đặt framework và triển khai large language model, nhà phát triển có thể truy cập **foundation models (FMs)** thông qua API. Cách tiếp cận này rút ngắn thời gian phát triển và cho phép nhóm tập trung vào business logic của ứng dụng.
 

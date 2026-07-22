@@ -5,9 +5,6 @@ weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
 **Amazon Bedrock** is a fully managed service for building generative AI applications on AWS. Instead of provisioning GPU servers, installing frameworks, and deploying large language models, developers can access **foundation models (FMs)** through APIs. This approach shortens development time and allows teams to focus on application-specific business logic.
 

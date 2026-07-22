@@ -6,10 +6,6 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 When deploying a system on a cloud computing platform, choosing the right services is only the first step. For a system to operate stably, meet user needs, and scale easily in the future, the overall architecture must be designed according to clear principles. To help businesses and developers build effective Cloud systems, Amazon Web Services (AWS) developed the AWS Well-Architected Framework — an architectural design guidance framework based on best practices drawn from deploying and operating Cloud infrastructure at a global scale.
 
 AWS Well-Architected Framework is not an AWS service but a guidance document that helps evaluate and improve system architecture quality. This framework is built on AWS's practical experience and feedback from millions of customers using the Cloud platform. The Framework's goal is to help organizations design systems that operate stably, securely, optimize costs, and respond well as usage scale expands.

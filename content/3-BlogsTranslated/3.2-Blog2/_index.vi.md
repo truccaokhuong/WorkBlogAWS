@@ -5,9 +5,7 @@ weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+
 
 Việc lựa chọn dịch vụ phù hợp chỉ là bước đầu tiên trong xây dựng hệ thống đám mây. Để hệ thống duy trì ổn định, bảo mật, phản hồi nhanh và có khả năng mở rộng theo thời gian, kiến trúc tổng thể phải tuân theo các nguyên tắc thiết kế rõ ràng.
 

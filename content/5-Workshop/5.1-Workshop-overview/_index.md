@@ -5,10 +5,6 @@ weight: 1
 chapter: false
 pre: " <b> 5.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
 ### Workshop Goal
 
 This workshop guides the deployment and operation of **VTrips**, a **serverless-first** travel platform on AWS. The system allows users to register/login, browse places, write reviews, save places, plan itineraries, and handle business/booking workflows.

@@ -5,10 +5,6 @@ weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 Amazon Simple Storage Service (Amazon S3) là dịch vụ lưu trữ đối tượng có khả năng mở rộng cao, cung cấp dung lượng gần như không giới hạn và độ bền dữ liệu lên đến **99.999999999% (11 số 9)**. Thay vì cung cấp một mô hình lưu trữ duy nhất, Amazon S3 cung cấp nhiều storage class cho các tần suất truy cập, tốc độ truy xuất, yêu cầu tính sẵn sàng, thời gian lưu trữ và mục tiêu chi phí khác nhau.
 
 Việc chọn storage class phù hợp giúp hệ thống đáp ứng yêu cầu truy cập dữ liệu đồng thời tối ưu chi phí vận hành tổng thể.
