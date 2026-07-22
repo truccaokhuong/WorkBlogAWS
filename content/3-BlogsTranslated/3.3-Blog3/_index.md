@@ -1,126 +1,101 @@
 ---
-title: "Blog 3"
+title: "Blog 3 - Survey of Amazon S3 Storage Classes and Selection Criteria"
 date: 2024-01-01
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
+
 {{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
+⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
 {{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+Amazon S3 (Simple Storage Service) is one of the most popular data storage services of Amazon Web Services (AWS), designed with virtually unlimited storage capacity, data durability of up to 99.999999999% (11 nines), and flexible scalability. Rather than offering a single storage form, Amazon S3 is divided into multiple Storage Classes to meet different needs regarding access frequency, performance, retention duration, and cost.
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+Choosing the right storage class not only ensures usage efficiency but also significantly optimizes operational costs. Each Storage Class is designed for a specific data group, from frequently accessed data to long-term archival data for backup or record-keeping purposes.
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+## Overview of Amazon S3 Storage Classes
 
----
+Amazon S3 currently offers various storage classes, with the most common including:
 
-## Architecture Guidance
+- S3 Standard
+- S3 Intelligent-Tiering
+- S3 Standard-Infrequent Access (Standard-IA)
+- S3 One Zone-Infrequent Access (One Zone-IA)
+- S3 Glacier Instant Retrieval
+- S3 Glacier Flexible Retrieval
+- S3 Glacier Deep Archive
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+These storage classes are categorized by data access frequency, from "Hot Data" that is frequently used to "Cold Data" that is only retrieved in special circumstances.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+## S3 Standard
 
-**The solution architecture is now as follows:**
+S3 Standard is the default storage class of Amazon S3 and is suitable for frequently accessed data. This is the choice for applications requiring high performance, low latency, and high availability.
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+Use cases include: static websites, web applications, mobile applications, storage of continuously accessed images, videos, or documents.
 
----
+The advantages of S3 Standard include millisecond access time, high availability, and data stored across multiple Availability Zones to enhance fault tolerance. However, the storage cost of this class is higher compared to other classes.
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+## S3 Intelligent-Tiering
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+S3 Intelligent-Tiering is designed for data with unpredictable or unstable access patterns. The standout feature of this storage class is the ability to automatically move data between storage tiers based on usage levels without user intervention.
 
----
+If data is frequently accessed, the system maintains it at the high-performance tier. When data becomes less frequently used, Amazon S3 automatically moves it to a lower-cost tier to save budget.
 
-## Technology Choices and Communication Scope
+This storage class is suitable for enterprise data lakes, project documents, and digital content with varying access frequency over time. Although there is an additional object monitoring fee, Intelligent-Tiering significantly reduces storage costs for systems with large data volumes.
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+## S3 Standard-Infrequent Access (Standard-IA)
 
----
+Standard-IA is designed for data that is infrequently accessed but still requires fast retrieval when needed. Compared to S3 Standard, Standard-IA storage costs are lower; however, users pay an additional fee each time data is retrieved.
 
-## The Pub/Sub Hub
+Use cases include: data backup, archival records, backup data, and documents accessed only a few times per year. This storage class still ensures data durability equivalent to S3 Standard and data is stored across multiple Availability Zones.
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+## S3 One Zone-Infrequent Access
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+One Zone-IA has similar characteristics to Standard-IA but data is stored in only a single Availability Zone. Since there is no data replication mechanism across multiple Availability Zones, storage costs are lower. However, if the Availability Zone experiences a severe failure, data may become unrecoverable.
 
----
+One Zone-IA is suitable for reproducible data, temporary files, secondary backup data, and content that does not require high availability. This is a reasonable choice when businesses want cost savings and can accept higher risk levels.
 
-## Core Microservice
+## S3 Glacier Instant Retrieval
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+Glacier Instant Retrieval is for long-term archive data that still needs immediate retrieval when needed. Unlike traditional Glacier classes, retrieval time for Glacier Instant Retrieval is measured in milliseconds, while storage costs are lower than S3 Standard-IA.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+This storage class is commonly used for medical records, archived images, multimedia content, and legal data requiring long-term retention.
 
----
+## S3 Glacier Flexible Retrieval
 
-## Front Door Microservice
+Glacier Flexible Retrieval targets long-term archive data that does not require frequent access. Users can choose from various retrieval time options, from minutes to hours, depending on needs and desired cost levels.
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+Common applications include: enterprise record storage, periodic data backup, historical document storage, and audit data. This is a storage class that balances cost and retrieval capability.
 
----
+## S3 Glacier Deep Archive
 
-## Staging ER7 Microservice
+Glacier Deep Archive is the lowest-cost storage class in Amazon S3, designed for data that needs to be retained for very long periods and is almost never accessed. Retrieval time can extend to several hours, so this storage class is not suitable for frequently used data.
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+Use cases include: legal record storage, multi-year data archives, regulatory compliance documents for businesses or government agencies, and long-term backup. This is the appropriate solution when the primary goal is to minimize storage costs.
 
----
+## Selection Criteria for Choosing the Right Storage Class
 
-## New Features in the Solution
+Choosing a Storage Class should not be based on cost alone but should consider multiple factors simultaneously.
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+### Data Access Frequency
+
+This is the most important factor. Frequently accessed data should use S3 Standard or Intelligent-Tiering. For data accessed only a few times per month or per year, Standard-IA or Glacier are more suitable choices.
+
+### Required Data Retrieval Time
+
+If the application requires immediate retrieval, choose classes with millisecond response times such as Standard, Intelligent-Tiering, or Glacier Instant Retrieval. For data that can wait minutes or hours, Glacier Flexible Retrieval or Glacier Deep Archive will significantly save costs.
+
+### Storage Costs and Retrieval Costs
+
+Typically, the lower the storage cost, the higher the retrieval cost. Therefore, consider the trade-off between the number of data accesses and the total cost throughout the data lifecycle.
+
+### Availability Requirements
+
+If data is critical and requires high availability, prioritize storage classes deployed across multiple Availability Zones such as Standard or Standard-IA. In cases where data is reproducible or not critical, One Zone-IA will help reduce costs.
+
+### Data Retention Duration
+
+Short-term data is usually suitable for Standard or Intelligent-Tiering. Conversely, data that needs to be retained for many years but rarely accessed should use Glacier Flexible Retrieval or Glacier Deep Archive to optimize the budget.
+
+The fact that Amazon S3 offers multiple storage classes shows that AWS does not aim for a one-size-fits-all solution but allows users to choose the approach appropriate for each specific need. Understanding the characteristics of each Storage Class helps build a more effective storage strategy, both ensuring data access capability when needed and optimizing system operational costs on the AWS platform.

@@ -5,29 +5,38 @@ weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
-
 {{% notice warning %}}
 ⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
 {{% /notice %}}
 
+# Workshop
 
-# Đảm bảo truy cập Hybrid an toàn đến S3 bằng cách sử dụng VPC endpoint
+Chương này trình bày workshop triển khai dự án **VTrips** trên AWS. Nội dung dựa trên README workshop của nhóm, ảnh chụp màn hình triển khai và sơ đồ kiến trúc hệ thống.
 
-#### Tổng quan
+Workshop được tổ chức theo trình tự rõ ràng: bối cảnh và mục tiêu dự án, mô tả kiến trúc, yêu cầu tiên quyết, triển khai, kiểm thử, demo sản phẩm và dọn dẹp tài nguyên.
 
-**AWS PrivateLink** cung cấp kết nối riêng tư đến các dịch vụ aws từ VPCs hoặc trung tâm dữ liệu (on-premise) mà không làm lộ lưu lượng truy cập ra ngoài public internet.
+**5.1:** [Tổng quan](5.1-Workshop-overview/)
 
-Trong bài lab này, chúng ta sẽ học cách tạo, cấu hình, và kiểm tra VPC endpoints để cho phép workload của bạn tiếp cận các dịch vụ AWS mà không cần đi qua Internet công cộng.
+Giới thiệu mục tiêu workshop, phạm vi MVP, các module đã hoàn thành và tiêu chí thành công cho hệ thống VTrips.
 
-Chúng ta sẽ tạo hai loại endpoints để truy cập đến Amazon S3: gateway vpc endpoint và interface vpc endpoint. Hai loại vpc endpoints này mang đến nhiều lợi ích tùy thuộc vào việc bạn truy cập đến S3 từ môi trường cloud hay từ trung tâm dữ liệu (on-premise).
-+ **Gateway** - Tạo gateway endpoint để gửi lưu lượng đến Amazon S3 hoặc DynamoDB using private IP addresses. Bạn điều hướng lưu lượng từ VPC của bạn đến gateway endpoint bằng các bảng định tuyến (route tables)
-+ **Interface** - Tạo interface endpoint để gửi lưu lượng đến các dịch vụ điểm cuối (endpoints) sử dụng Network Load Balancer để phân phối lưu lượng. Lưu lượng dành cho dịch vụ điểm cuối được resolved bằng DNS.
+**5.2:** [Mô tả Kiến trúc](5.2-Prerequiste/)
 
-#### Nội dung
+Giải thích sơ đồ kiến trúc, các tầng hệ thống, luồng request chính, dịch vụ AWS sử dụng, bảo mật, logging/monitoring và lộ trình tiến hóa production.
 
-1. [Tổng quan về workshop](5.1-Workshop-overview/)
-2. [Chuẩn bị](5.2-Prerequiste/)
-3. [Truy cập đến S3 từ VPC](5.3-S3-vpc/)
-4. [Truy cập đến S3 từ TTDL On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (làm thêm)](5.5-Policy/)
-6. [Dọn dẹp tài nguyên](5.6-Cleanup/)
+**5.3:** [Yêu cầu tiên quyết](5.3-S3-vpc/)
+
+Liệt kê tài khoản AWS, quyền IAM, region, công cụ local và cấu hình môi trường cần thiết trước khi triển khai.
+
+**5.4:** [Hướng dẫn Triển khai](5.4-S3-onprem/)
+
+Cung cấp các bước triển khai: build backend, chuẩn bị database, đóng gói Lambda, cấu hình runtime/API và publish frontend.
+
+**5.5:** [Kiểm thử & Xác thực](5.5-Policy/)
+
+Xác thực frontend, authentication, APIs, database/cache, tải ảnh, CloudWatch Logs và các vấn đề phổ biến sau triển khai.
+
+**5.6:** [Demo](5.6-Demo/)
+
+Demo sản phẩm VTrips qua luồng người dùng cuối (trang chủ, tìm kiếm, địa điểm đã lưu, tạo chuyến đi, đặt chỗ) và góc nhìn doanh nghiệp/quản trị (dashboard, xác minh địa điểm, tổng quan quản trị).
+
+**5.7:** [Dọn dẹp](5.7-Cleanup/)

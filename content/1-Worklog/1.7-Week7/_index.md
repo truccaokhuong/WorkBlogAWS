@@ -12,46 +12,32 @@ pre: " <b> 1.7. </b> "
 
 ### Week 7 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Form the group project team and get acquainted with all members.
+* Understand the project scope: Business, Booking & Admin Service.
+* Conduct comprehensive requirements analysis across all three modules.
+* Select the technology stack for frontend, backend, and database.
+* Assign specific roles and responsibilities to each team member.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | ---- | ---------- | --------------- | ------------------ |
+| 2 | - Meet the group project team members <br> - Review internship project guidelines and expectations | 29/05/2026 | 29/05/2026 | Project Brief, Internship Guidelines |
+| 3 | - Project overview presentation: Business, Booking & Admin platform <br> - Discuss core features and user roles (Business Owner, Customer, Admin) | 30/05/2026 | 30/05/2026 | Project Requirements Document |
+| 4 | - Requirements gathering - **Business Owner module:** <br>&emsp; + Register as business owner <br>&emsp; + Claim a location <br>&emsp; + View managed locations list <br>&emsp; + Update business information <br>&emsp; + View new reviews <br>&emsp; + Respond to reviews <br>&emsp; + View basic statistics (views, reviews count, average rating) | 31/05/2026 | 31/05/2026 | AWS Documentation, React Docs |
+| 5 | - Requirements gathering - **Booking module:** <br>&emsp; + Create a booking <br>&emsp; + View user's bookings <br>&emsp; + View booking details <br>&emsp; + Cancel booking <br>&emsp; + Booking status management: Pending → Confirmed / Cancelled → Completed <br> - Requirements gathering - **Admin module:** <br>&emsp; + Dashboard overview <br>&emsp; + User management <br>&emsp; + Approve new places <br>&emsp; + Approve business claims <br>&emsp; + Handle review reports <br>&emsp; + Lock/unlock places <br>&emsp; + Lock/unlock user accounts | 01/06/2026 | 01/06/2026 | Figma (UI reference), System Design Docs |
+| 6 | - Tech stack discussion and selection: <br>&emsp; + Frontend: React + Tailwind CSS <br>&emsp; + Backend: Node.js + Express <br>&emsp; + Database: PostgreSQL (AWS RDS) <br>&emsp; + Cloud: AWS (S3, Lambda, API Gateway, Cognito) <br> - Task assignment: Cao Khuong Truc assigned to 9 screens (Business Dashboard, Claim Listing, My Business Listings, Booking Page, My Bookings, Admin Dashboard, Admin User Management, Admin Place Management, Admin Report Management) <br> - Set up Git repository and branch structure | 02/06/2026 | 02/06/2026 | GitHub, Jira Board |
 
 
 ### Week 7 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* ✅ Successfully formed a 4-member project team with clear communication channels (Slack, weekly standups).
+* ✅ Fully understood the project scope across three core modules: Business Owner, Booking, and Admin.
+* ✅ Completed detailed requirements documentation for all features, covering functional and non-functional requirements.
+* ✅ Tech stack finalized:
+  * **Frontend**: React 18 with TypeScript, Tailwind CSS, React Router v6, React Hook Form + Zod validation
+  * **Backend**: Node.js with Express, Prisma ORM, JWT authentication, Socket.io for real-time updates
+  * **Database**: PostgreSQL on AWS RDS, Redis for caching
+  * **Cloud Infrastructure**: AWS S3 for file storage, AWS Lambda for serverless functions, AWS API Gateway, AWS Cognito for authentication
+* ✅ Clear task assignment: I (Cao Khuong Truc) am responsible for 9 screens covering all three modules.
+* ✅ Git repository initialized with branch protection rules and Jira board set up for sprint tracking.
+* ✅ Created initial wireframes and user flow diagrams for assigned screens.

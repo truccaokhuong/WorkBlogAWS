@@ -1,18 +1,54 @@
 ---
-title : "Access S3 from VPC"
-date : 2024-01-01
-weight : 3
-chapter : false
-pre : " <b> 5.3. </b> "
+title: "Prerequisite"
+date: 2024-01-01
+weight: 3
+chapter: false
+pre: " <b> 5.3. </b> "
 ---
+{{% notice warning %}}
+⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
+{{% /notice %}}
 
-#### Using Gateway endpoint
+### AWS Requirements
 
-In this section, you will create **a Gateway eendpoint** to access **Amazon S3** from **an EC2 instance**. **The Gateway endpoint** will allow upload an object to S3 buckets without using **the Public Internet**. To create an endpoint, you must specify the VPC in which you want to create the endpoint, and the service (in this case, S3) to which you want to establish the connection.
+Before deploying the workshop, prepare:
 
-![overview](/images/5-Workshop/5.3-S3-vpc/diagram2.png)
+* An AWS account with permissions to create/update Lambda, API Gateway, RDS, ElastiCache, S3, IAM roles/policies, VPC/Security Groups, and CloudWatch Logs.
+* A consistent deployment region, for example `ap-southeast-2`.
+* An S3 bucket for Lambda artifacts and a bucket/application storage for uploaded images.
+* VPC, subnets, and Security Groups that allow Lambda to connect to RDS/Redis.
+* A Lambda IAM role with least-privilege permissions.
 
-#### Content
+### Local Tools
 
-- [Create gateway endpoint](3.1-create-gwe/)
-- [Test gateway endpoint](3.2-test-gwe/)
+Install the following tools locally:
+
+* Node.js 20 or later.
+* npm.
+* AWS CLI v2.
+* Git.
+* PostgreSQL client tools for database checks.
+
+Verify the toolchain:
+
+```powershell
+node --version
+npm --version
+aws --version
+aws sts get-caller-identity
+```
+
+### Environment Configuration
+
+Create environment configuration based on the project example file. Never commit secrets to the repository.
+
+```env
+NODE_ENV=production
+DATABASE_URL=postgresql://USER:PASSWORD@RDS_ENDPOINT:5432/travelplatform
+REDIS_URL=redis://REDIS_ENDPOINT:6379
+JWT_SECRET=replace-with-a-long-random-secret
+AWS_REGION=ap-southeast-2
+S3_BUCKET_UPLOADS=replace-with-your-bucket
+```
+
+For production, use protected Lambda environment variables or AWS Secrets Manager instead of storing credentials in local files.

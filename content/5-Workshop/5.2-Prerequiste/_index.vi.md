@@ -1,242 +1,95 @@
 ---
-title : "Các bước chuẩn bị"
-date : 2024-01-01 
-weight : 2
-chapter : false
-pre : " <b> 5.2. </b> "
+title: "Mô tả Kiến trúc"
+date: 2024-01-01
+weight: 2
+chapter: false
+pre: " <b> 5.2. </b> "
 ---
+{{% notice warning %}}
+⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
+{{% /notice %}}
 
-#### IAM permissions
-Gắn IAM permission policy sau vào tài khoản aws user của bạn để triển khai và dọn dẹp tài nguyên trong workshop này.
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:*",
-                "cloudwatch:*",
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:AcceptTransitGatewayVpcAttachment",
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AssociateIamInstanceProfile",
-                "ec2:AssociateRouteTable",
-                "ec2:AssociateSubnetCidrBlock",
-                "ec2:AssociateTransitGatewayRouteTable",
-                "ec2:AssociateVpcCidrBlock",
-                "ec2:AttachInternetGateway",
-                "ec2:AttachNetworkInterface",
-                "ec2:AttachVolume",
-                "ec2:AttachVpnGateway",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateClientVpnEndpoint",
-                "ec2:CreateClientVpnRoute",
-                "ec2:CreateCustomerGateway",
-                "ec2:CreateDhcpOptions",
-                "ec2:CreateFlowLogs",
-                "ec2:CreateInternetGateway",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateNetworkAcl",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreateNetworkInterfacePermission",
-                "ec2:CreateRoute",
-                "ec2:CreateRouteTable",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSubnet",
-                "ec2:CreateSubnetCidrReservation",
-                "ec2:CreateTags",
-                "ec2:CreateTransitGateway",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:CreateTransitGatewayRoute",
-                "ec2:CreateTransitGatewayRouteTable",
-                "ec2:CreateTransitGatewayVpcAttachment",
-                "ec2:CreateVpc",
-                "ec2:CreateVpcEndpoint",
-                "ec2:CreateVpcEndpointConnectionNotification",
-                "ec2:CreateVpcEndpointServiceConfiguration",
-                "ec2:CreateVpnConnection",
-                "ec2:CreateVpnConnectionRoute",
-                "ec2:CreateVpnGateway",
-                "ec2:DeleteCustomerGateway",
-                "ec2:DeleteFlowLogs",
-                "ec2:DeleteInternetGateway",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeleteNetworkInterfacePermission",
-                "ec2:DeleteRoute",
-                "ec2:DeleteRouteTable",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteSubnet",
-                "ec2:DeleteSubnetCidrReservation",
-                "ec2:DeleteTags",
-                "ec2:DeleteTransitGateway",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayRoute",
-                "ec2:DeleteTransitGatewayRouteTable",
-                "ec2:DeleteTransitGatewayVpcAttachment",
-                "ec2:DeleteVpc",
-                "ec2:DeleteVpcEndpoints",
-                "ec2:DeleteVpcEndpointServiceConfigurations",
-                "ec2:DeleteVpnConnection",
-                "ec2:DeleteVpnConnectionRoute",
-                "ec2:Describe*",
-                "ec2:DetachInternetGateway",
-                "ec2:DisassociateAddress",
-                "ec2:DisassociateRouteTable",
-                "ec2:GetLaunchTemplateData",
-                "ec2:GetTransitGatewayAttachmentPropagations",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:ModifySecurityGroupRules",
-                "ec2:ModifyTransitGatewayVpcAttachment",
-                "ec2:ModifyVpcAttribute",
-                "ec2:ModifyVpcEndpoint",
-                "ec2:ReleaseAddress",
-                "ec2:ReplaceRoute",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:StartInstances",
-                "ec2:StopInstances",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-                "iam:AddRoleToInstanceProfile",
-                "iam:AttachRolePolicy",
-                "iam:CreateInstanceProfile",
-                "iam:CreatePolicy",
-                "iam:CreateRole",
-                "iam:DeleteInstanceProfile",
-                "iam:DeletePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy",
-                "iam:DetachRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:ListPolicyVersions",
-                "iam:ListRoles",
-                "iam:PassRole",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:DeleteLayerVersion",
-                "lambda:GetFunction",
-                "lambda:GetLayerVersion",
-                "lambda:InvokeFunction",
-                "lambda:PublishLayerVersion",
-                "logs:CreateLogGroup",
-                "logs:DeleteLogGroup",
-                "logs:DescribeLogGroups",
-                "logs:PutRetentionPolicy",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHealthCheck",
-                "route53:CreateHostedZone",
-                "route53:CreateTrafficPolicy",
-                "route53:DeleteHostedZone",
-                "route53:DisassociateVPCFromHostedZone",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53domains:ListDomains",
-                "route53domains:ListOperations",
-                "route53domains:ListTagsForDomain",
-                "route53resolver:AssociateResolverEndpointIpAddress",
-                "route53resolver:AssociateResolverRule",
-                "route53resolver:CreateResolverEndpoint",
-                "route53resolver:CreateResolverRule",
-                "route53resolver:DeleteResolverEndpoint",
-                "route53resolver:DeleteResolverRule",
-                "route53resolver:DisassociateResolverEndpointIpAddress",
-                "route53resolver:DisassociateResolverRule",
-                "route53resolver:GetResolverEndpoint",
-                "route53resolver:GetResolverRule",
-                "route53resolver:ListResolverEndpointIpAddresses",
-                "route53resolver:ListResolverEndpoints",
-                "route53resolver:ListResolverRuleAssociations",
-                "route53resolver:ListResolverRules",
-                "route53resolver:ListTagsForResource",
-                "route53resolver:UpdateResolverEndpoint",
-                "route53resolver:UpdateResolverRule",
-                "s3:AbortMultipartUpload",
-                "s3:CreateBucket",
-                "s3:DeleteBucket",
-                "s3:DeleteObject",
-                "s3:GetAccountPublicAccessBlock",
-                "s3:GetBucketAcl",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketPolicy",
-                "s3:GetBucketPolicyStatus",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetObject",
-                "s3:GetObjectVersion",
-                "s3:GetBucketVersioning",
-                "s3:ListAccessPoints",
-                "s3:ListAccessPointsForObjectLambda",
-                "s3:ListAllMyBuckets",
-                "s3:ListBucket",
-                "s3:ListBucketMultipartUploads",
-                "s3:ListBucketVersions",
-                "s3:ListJobs",
-                "s3:ListMultipartUploadParts",
-                "s3:ListMultiRegionAccessPoints",
-                "s3:ListStorageLensConfigurations",
-                "s3:PutAccountPublicAccessBlock",
-                "s3:PutBucketAcl",
-                "s3:PutBucketPolicy",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutObject",
-                "secretsmanager:CreateSecret",
-                "secretsmanager:DeleteSecret",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:ListSecrets",
-                "secretsmanager:ListSecretVersionIds",
-                "secretsmanager:PutResourcePolicy",
-                "secretsmanager:TagResource",
-                "secretsmanager:UpdateSecret",
-                "sns:ListTopics",
-                "ssm:DescribeInstanceProperties",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ResumeSession",
-                "ssm:StartSession",
-                "ssm:TerminateSession"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
+### Kiến trúc Tổng thể
 
+Kiến trúc VTrips tuân theo hướng serverless-first với sự phân tách rõ ràng giữa các tầng frontend, API, compute, data storage, messaging và monitoring. Người dùng truy cập ứng dụng qua frontend, trong khi các request nghiệp vụ đi qua API Gateway và được xử lý bởi Lambda API Handler.
+
+![Kiến trúc VTrips](/images/5-Workshop/target-architecture.jpg)
+
+### Kiến trúc MVP đã Triển khai
+
+```mermaid
+flowchart LR
+  U[Browser] -->|HTTPS| API[Amazon API Gateway]
+  API --> L[AWS Lambda<br/>Node.js 20 + Express]
+  L --> RDS[(Amazon RDS<br/>PostgreSQL)]
+  L --> REDIS[(ElastiCache<br/>Redis)]
+  L --> S3[Amazon S3<br/>Artifacts & Images]
+  CW[CloudWatch Logs] <-. logs .-> L
+  IAM[IAM Role & Policies] -. permissions .-> L
 ```
 
-#### Khởi tạo tài nguyên bằng CloudFormation
+![Tổng quan Lambda](/images/5-Workshop/02-lambda-overview.png)
 
-Trong lab này, chúng ta sẽ dùng N.Virginia region (us-east-1).
+### Trách nhiệm Dịch vụ AWS
 
-Để chuẩn bị cho môi trường làm workshop, chúng ta deploy CloudFormation template sau (click link): [PrivateLinkWorkshop ](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.us-east-1.amazonaws.com/reinvent-endpoints-builders-session/Nested.yaml&stackName=PLCloudSetup). Để nguyên các lựa chọn mặc định.
+| Dịch vụ AWS | Trách nhiệm |
+| --- | --- |
+| API Gateway | Điểm vào HTTPS công khai và định tuyến request đến Lambda |
+| Lambda | Runtime API TypeScript/Node.js và business logic |
+| RDS PostgreSQL | Dữ liệu giao dịch cho users, places, trips, reviews và bookings |
+| ElastiCache Redis | Cache dữ liệu nóng và trạng thái ứng dụng ngắn hạn |
+| S3 | Artifacts triển khai Lambda và ảnh tải lên |
+| CloudWatch | Logs và chẩn đoán |
+| IAM | Kiểm soát truy cập least-privilege cho Lambda |
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack1.png)
+![Tổng quan RDS](/images/5-Workshop/08-rds-overview.png)
 
-+ Lựa chọn 2 mục acknowledgement 
-+ Chọn Create stack
+![Tổng quan Redis](/images/5-Workshop/10-redis-overview.png)
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack2.png)
+### Luồng Request Chính
 
-Quá trình triển khai CloudFormation cần khoảng 15 phút để hoàn thành.
+Đối với một API request đã xác thực, browser gửi HTTPS request với Bearer token đến API Gateway. API Gateway gọi Lambda, Lambda xác thực input, phân quyền user, truy vấn hoặc cập nhật PostgreSQL/Redis/S3 và trả về JSON response cho frontend.
 
-![complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+```mermaid
+sequenceDiagram
+  participant B as Browser
+  participant G as API Gateway
+  participant L as Lambda API
+  participant D as PostgreSQL
+  B->>G: HTTPS request với Bearer token
+  G->>L: Gọi route handler
+  L->>L: Xác thực input và phân quyền user
+  L->>D: Truy vấn hoặc cập nhật dữ liệu
+  D-->>L: Kết quả
+  L-->>G: JSON response
+  G-->>B: HTTPS response
+```
 
-+ 2 VPCs đã được tạo
+### Luồng Tải Ảnh
 
-![vpcs](/images/5-Workshop/5.2-Prerequisite/vpcs.png)
+1. Người dùng đã xác thực yêu cầu URL tải lên từ API.
+2. Lambda xác thực quyền sở hữu và tạo S3 presigned URL ngắn hạn.
+3. Browser tải file trực tiếp lên S3.
+4. Frontend lưu trữ hoặc hiển thị URL ảnh kết quả trong place/review liên quan.
 
-+ 3 EC2s đã được tạo
+Cách này giữ AWS credentials ngoài browser và tránh gửi file lớn qua Lambda.
 
-![EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+![API Gateway routes](/images/5-Workshop/06-api-gateway-routes.png)
+
+![S3 artifact bucket](/images/5-Workshop/11-s3-artifact-bucket.png)
+
+### Bảo mật, Logging và Tối ưu Chi phí
+
+* RDS và Redis nên nằm trong private subnets và không được expose trực tiếp ra Internet.
+* Database/cache Security Groups chỉ nên cho phép inbound traffic từ Lambda Security Group.
+* Secrets như database URLs và JWT secrets không được commit vào source code.
+* Lambda execution roles chỉ nên có các quyền S3, log group và resource cần thiết.
+* API Gateway nên cấu hình CORS, throttling và giới hạn origin frontend production.
+* CloudWatch Logs giúp debug lỗi Lambda, latency, timeouts và vấn đề kết nối database/cache.
+* S3 lifecycle policies và log retention nên được cấu hình để kiểm soát chi phí.
+
+![Cấu hình Lambda VPC](/images/5-Workshop/04-lambda-vpc.png)
+
+![Lambda permissions](/images/5-Workshop/05-lambda-permissions.png)
+
+![Cấu hình mạng RDS](/images/5-Workshop/09-rds-network.png)

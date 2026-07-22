@@ -1,18 +1,52 @@
 ---
-title : "Introduction"
-date : 2024-01-01 
-weight : 1 
-chapter : false
-pre : " <b> 5.1. </b> "
+title: "Overview"
+date: 2024-01-01
+weight: 1
+chapter: false
+pre: " <b> 5.1. </b> "
 ---
+{{% notice warning %}}
+⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
+{{% /notice %}}
 
-#### VPC endpoints
-+ **VPC endpoints** are virtual devices. They are horizontally scaled, redundant, and highly available VPC components. They allow communication between your compute resources and AWS services without imposing availability risks.
-+ Compute resources running in VPC can access  **Amazon S3**  using a Gateway endpoint. PrivateLink interface endpoints can be used by compute resources running in VPC or on-premises.
+### Workshop Goal
 
-#### Workshop overview
-In this workshop, you will use two VPCs. 
-+ **"VPC Cloud"** is for cloud resources such as a  **Gateway endpoint** and an EC2 instance to test with. 
-+ **"VPC On-Prem"** simulates an on-premises environment such as a factory or corporate datacenter. An EC2 instance running strongSwan VPN software has been deployed in "VPC On-prem" and automatically configured to establish a Site-to-Site VPN tunnel with AWS Transit Gateway. This VPN simulates connectivity from an on-premises location to the AWS cloud. To minimize costs, only one VPN instance is provisioned to support this workshop. When planning VPN connectivity for your production workloads, AWS recommends using multiple VPN devices for high availability.
+This workshop guides the deployment and operation of **VTrips**, a **serverless-first** travel platform on AWS. The system allows users to register/login, browse places, write reviews, save places, plan itineraries, and handle business/booking workflows.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+The deployed MVP focuses on the core AWS services: AWS Lambda, Amazon API Gateway, Amazon RDS PostgreSQL, Amazon ElastiCache Redis, Amazon S3, IAM, VPC networking, and Amazon CloudWatch.
+
+![VTrips frontend](/images/5-Workshop/frontend-home.png)
+
+### Main Modules
+
+| Module | Main capabilities | API endpoints |
+| --- | --- | ---: |
+| Authentication | Register, login, token refresh, password recovery, profile | 7 |
+| Places | Browse, search, CRUD, image upload, view tracking | 7 |
+| Reviews | Ratings, helpful votes, reports, owner replies | 7 |
+| Trips | Saved places, itinerary planning, public sharing | 12 |
+| Business and Bookings | Business claims, bookings, status workflow, admin views | 10 |
+
+The current implementation contains **43 documented API endpoints**.
+
+### Deployment Scope
+
+The MVP uses the following configured components:
+
+* API Gateway as the public HTTPS entry point.
+* Lambda for Node.js/Express API runtime and business logic.
+* RDS PostgreSQL for transactional data.
+* ElastiCache Redis for cache and short-lived state.
+* S3 for deployment artifacts and uploaded images.
+* CloudWatch for logs and diagnostics.
+* IAM for least-privilege access control.
+
+Services such as CloudFront, Cognito, SQS, SNS, SES, EventBridge, X-Ray, KMS, Secrets Manager, WAF, and OpenSearch are considered production-growth options. They should only be claimed as deployed when the corresponding AWS environment has been configured.
+
+### Success Criteria
+
+* Backend builds successfully and Lambda is updated with the new artifact.
+* API Gateway invokes Lambda and returns valid responses.
+* Lambda connects to RDS PostgreSQL, Redis, and S3 in the deployed environment.
+* Frontend can call the deployed API with correct CORS/token behavior.
+* Core flows such as login, place browsing, trip creation, image upload, and log inspection work reliably.

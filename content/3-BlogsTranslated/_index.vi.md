@@ -1,5 +1,5 @@
 ---
-title: "Các bài blogs đã dịch"
+title: "Blog Posts"
 date: 2024-01-01
 weight: 3
 chapter: false

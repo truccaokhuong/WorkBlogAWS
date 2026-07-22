@@ -1,126 +1,42 @@
 ---
-title: "Blog 1"
+title: "Blog 1 - Amazon Bedrock – Generative AI Service on AWS"
 date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
+
 {{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
+⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
 {{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+Recently, I have been spending time learning about AI services on AWS, especially Amazon Bedrock. After reading AWS documentation and reviewing deployment examples, I found this to be a very useful service as it greatly simplifies the process of building AI applications.
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+The first thing that impressed me is that Amazon Bedrock does not require developers to set up or manage AI infrastructure themselves. Instead of having to prepare GPU servers, install frameworks, and deploy large language models (LLMs), AWS provides ready-to-use AI models from various providers on a single platform. Users simply send a prompt through the API to receive results from the AI model.
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+In my illustrated diagram, the processing flow of an AI application using Amazon Bedrock works as follows:
 
----
+The user sends a request from a Website or Mobile App.
+Amazon API Gateway receives the request and forwards it to AWS Lambda.
+AWS Lambda handles business logic, validates input data, constructs an appropriate prompt, and sends it to Amazon Bedrock.
+Amazon Bedrock selects the suitable AI model to process and generate a response.
+If the application needs to retrieve data, Lambda can read documents from Amazon S3 or fetch data from Amazon DynamoDB before sending the prompt or after receiving results.
+The final result is returned to the user through API Gateway.
 
-## Architecture Guidance
+One particularly interesting aspect is that Amazon Bedrock doesn't just support a single AI model — it integrates multiple Foundation Models from various providers such as Amazon Titan, Claude, Llama, Cohere, and Mistral AI. This allows developers to easily experiment with different models without making major architectural changes.
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+Additionally, Bedrock supports integration with Amazon Knowledge Bases to build applications using the RAG (Retrieval-Augmented Generation) pattern. Rather than relying solely on pre-trained knowledge, AI can retrieve additional documents from enterprise sources or Amazon S3 before generating responses. This leads to more accurate and up-to-date results, making it especially suitable for internal chatbots, document search assistants, or Q&A systems.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+Another service that appears in the diagram is Amazon CloudWatch. This is not a data processing component but a monitoring service for the entire system. CloudWatch collects logs, metrics, and alerts from API Gateway, Lambda, Bedrock, S3, or DynamoDB to help administrators track performance, detect errors, and resolve issues more quickly.
 
-**The solution architecture is now as follows:**
+Through this research, I've observed that AWS architecture is designed with component separation in mind. Each service fulfills a specific role, making the system easy to scale, maintain, and modify individual components without affecting the entire application. This is one of the reasons many enterprises choose AWS for deploying AI applications.
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+In the coming time, I will continue to research more deeply on topics such as:
 
----
+Amazon Bedrock Agents.
+Knowledge Bases and RAG patterns.
+Prompt Engineering on AWS.
+Integrating Bedrock with Lambda and API Gateway to build complete AI chatbots.
+Comparing the effectiveness of Foundation Models such as Claude, Titan, and Llama in different practical scenarios.
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
-
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
-
----
-
-## Technology Choices and Communication Scope
-
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
-
----
-
-## The Pub/Sub Hub
-
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
-
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
-
----
-
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
-
----
-
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+I am still in the learning process, so this article mainly reflects what I have gathered and researched. If you have experience deploying Amazon Bedrock in real projects, I would greatly appreciate any feedback or sharing to help me learn more.

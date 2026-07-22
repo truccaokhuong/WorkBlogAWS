@@ -12,48 +12,28 @@ pre: " <b> 1.10. </b> "
 
 ### Mục tiêu tuần 10:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Triển khai các màn hình phân hệ Booking: Booking Page và My Bookings.
+* Xây dựng giao diện xem chi tiết booking với timeline trạng thái.
+* Phát triển chức năng hủy booking với luồng xác nhận.
+* Triển khai quản lý state machine cho trạng thái booking.
+* Tích hợp cập nhật booking real-time qua WebSocket.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | --------- | ------------ | --------------- | -------------- |
+| 2 | - **Trang Booking**: <br>&emsp; + Thiết kế date/time picker hiển thị các khung giờ trống <br>&emsp; + Xây dựng bộ chọn số lượng khách và input yêu cầu đặc biệt <br>&emsp; + Triển khai kiểm tra tình trạng còn chỗ real-time để tránh đặt trùng <br>&emsp; + Thêm tóm tắt giá và bước xác nhận trước khi gửi <br>&emsp; + Kết nối đến API endpoint POST /bookings với form validation | 19/06/2026 | 19/06/2026 | React DatePicker, Zod Validation |
+| 3 | - **Trang My Bookings**: <br>&emsp; + Tạo danh sách booking với các tab trạng thái: Tất cả, Pending, Confirmed, Cancelled, Completed <br>&emsp; + Triển khai sắp xếp theo ngày, trạng thái và tên địa điểm <br>&emsp; + Xây dựng component thẻ booking với ảnh địa điểm, ngày, huy hiệu trạng thái và nút thao tác <br>&emsp; + Thêm hình minh họa trạng thái trống cho mỗi tab <br>&emsp; + Kết nối đến API endpoint GET /bookings?user_id=me với phân trang | 20/06/2026 | 20/06/2026 | React Query Pagination, Tailwind Tabs |
+| 4 | - **Trang Chi tiết Booking**: <br>&emsp; + Thiết kế bố cục chi tiết với thông tin địa điểm, thông tin booking và timeline trạng thái <br>&emsp; + Xây dựng component stepper trạng thái: Pending → Confirmed → Completed (hoặc Cancelled) <br>&emsp; + Thêm tùy chọn chỉnh sửa booking dựa trên trạng thái hiện tại <br>&emsp; + Triển khai tạo mã QR cho xác nhận booking <br>&emsp; + Kết nối đến API endpoint GET /bookings/:id | 21/06/2026 | 21/06/2026 | QR Code Library, Timeline UI |
+| 5 | - **Luồng Hủy Booking**: <br>&emsp; + Xây dựng dialog xác nhận với các tùy chọn lý do hủy <br>&emsp; + Triển khai logic nghiệp vụ: chỉ booking ở trạng thái Pending/Confirmed mới có thể hủy <br>&emsp; + Thêm hiển thị chính sách hoàn tiền cho việc hủy booking đã xác nhận <br>&emsp; + Triển khai optimistic UI update với rollback khi thất bại <br>&emsp; + Kết nối đến API endpoint PATCH /bookings/:id/cancel | 22/06/2026 | 22/06/2026 | React Modal, Optimistic Updates |
+| 6 | - **Vòng đời Trạng thái Booking**: <br>&emsp; + Triển khai state machine: Pending → Confirmed (bởi chủ doanh nghiệp), Pending → Cancelled (bởi người dùng), Confirmed → Completed (sau ngày booking), Confirmed → Cancelled (bởi người dùng) <br>&emsp; + Thêm Socket.io listener cho thay đổi trạng thái real-time <br>&emsp; + Xây dựng toast notification cho cập nhật trạng thái <br>&emsp; + Viết automated tests cho tất cả các chuyển đổi trạng thái <br> - Kiểm thử end-to-end toàn bộ luồng booking | 23/06/2026 | 23/06/2026 | XState (state machine), Socket.io, React Hot Toast |
 
 
 ### Kết quả đạt được tuần 10:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* ✅ **Trang Booking** hoàn chỉnh với date/time picker, kiểm tra tình trạng còn chỗ real-time, chọn số khách và luồng booking nhiều bước.
+* ✅ **Trang My Bookings** hoàn thành với lọc theo tab (5 tab trạng thái), phân trang infinite scroll và bố cục thẻ responsive.
+* ✅ **Trang Chi tiết Booking** cung cấp thông tin booking toàn diện, timeline trạng thái trực quan và mã QR để check-in dễ dàng.
+* ✅ **Luồng Hủy Booking** triển khai với thu thập lý do, xác thực quy tắc nghiệp vụ (chỉ trạng thái Pending/Confirmed) và optimistic UI updates.
+* ✅ **State Machine Vòng đời Trạng thái** xử lý chính xác tất cả 4 chuyển đổi với cập nhật WebSocket real-time và toast notification.
+* ✅ Đã viết 40+ unit test cho logic booking và 15 integration test cho toàn bộ luồng booking từ tạo đến hoàn thành.
+* ✅ Tất cả các màn hình Booking đã triển khai lên staging và vượt qua QA review với không lỗi nghiêm trọng.

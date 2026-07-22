@@ -10,116 +10,93 @@ pre: " <b> 4.1. </b> "
 ⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
 {{% /notice %}}
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Bài thu hoạch: "FCAJ Community Day"
+
+| Thông tin | Chi tiết |
+|---|---|
+| **Ngày** | 09/05/2026 |
+| **Địa điểm** | Tầng 26, Tòa nhà Bitexco, Số 02 Đường Hải Triều, Phường Sài Gòn, TP. Hồ Chí Minh |
+| **Vai trò** | Người tham dự |
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Chia sẻ các kỹ thuật tâm lý để tăng động lực học tập và xây dựng thói quen học tập bền vững.
+- Giới thiệu các kỹ thuật Prompt Engineering nâng cao để cải thiện chất lượng đầu ra của LLM.
+- Trình bày kiến trúc AWS Serverless thực tế cho các ứng dụng AI.
+- Định hướng nghề nghiệp, nhấn mạnh nền tảng kỹ thuật cốt lõi và tư duy chuyên nghiệp.
+- Giới thiệu phương pháp BMAD để cấu trúc tương tác AI Agent trong Vòng đời Phát triển Phần mềm (SDLC).
 
 ### Danh Sách Diễn Giả
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+- **Mr. Huynh Hoang Long** - Chia sẻ kỹ thuật điều tiết dopamine và gamification trong học tập.
+- **Mr. Thinh Nguyen** - Trình bày về Prompt Engineering và kiến trúc AWS Cloud.
+- **Mr. Khang** - Solutions Architect tại Cloud Kinetics.
+- **Ms. Thao** - Software Developer tại VIB.
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### 1. Hacking Não Bộ để Tạo Động Lực Học Tập
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+- **Cơ chế Dopamine:** Dopamine được kích hoạt bởi sự mong đợi phần thưởng, không chỉ là sự hoàn thành. Đưa vào sự biến đổi và tò mò có thể duy trì sự gắn kết lâu dài.
+- **Gamification:** Áp dụng các yếu tố trò chơi vào việc học, như duy trì chuỗi ngày liên tục và tận dụng nỗi sợ mất tiến độ để xây dựng tính nhất quán.
+- **Chia nhỏ nhiệm vụ:** Chia các chủ đề lớn thành các phần nhỏ, dễ quản lý (ví dụ: học một dịch vụ AWS mỗi ngày) để tránh sự kháng cự tinh thần.
+- **Quy tắc 2 Phút:** Thực hiện ngay các nhiệm vụ mất dưới hai phút để tránh trì hoãn.
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+#### 2. Prompt Engineering Đỉnh Cao & Kiến trúc AWS Serverless
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+- **Cấu trúc Prompt:** Prompt chất lượng cao phải xác định rõ Vai trò, Nhiệm vụ, Ngữ cảnh, Đầu vào, Ràng buộc Đầu ra và Ví dụ. Tránh các ràng buộc tiêu cực để giảm thiểu Ảo giác LLM.
+- **Kỹ thuật Nâng cao:** Sử dụng các phương pháp như Chuỗi Suy nghĩ (Chain of Thought) và Cây Suy nghĩ (Tree of Thoughts) để hướng dẫn LLM qua quá trình suy luận phức tạp, từng bước.
+- **Hệ sinh thái Serverless:** Trình diễn kiến trúc ứng dụng AI có khả năng mở rộng sử dụng:
+    - **Frontend & CDN:** Amazon S3 và Amazon CloudFront.
+    - **Xác thực:** Amazon Cognito.
+    - **Backend Compute:** Amazon API Gateway và AWS Lambda.
+    - **AI & Lưu trữ Dữ liệu:** Amazon Bedrock cho foundation models, Amazon DynamoDB cho lưu trữ NoSQL, và Amazon CloudWatch để giám sát liên tục.
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+#### 3. Tư Duy Nghề Nghiệp & Nền Tảng Cốt Lõi
 
-#### Domain-Driven Design (DDD)
+- **Nền tảng quan trọng hơn Công cụ:** AI đóng vai trò là bộ khuếch đại cho các kỹ năng hiện có. Điều quan trọng là không giao phó tư duy phản biện cho AI; nền tảng kỹ thuật vững chắc vẫn không thể thay thế.
+- **Tư duy "Tại sao":** Chuyên gia phải liên tục đặt câu hỏi về lý do đằng sau các quyết định kỹ thuật và thiết kế hệ thống, thay vì chỉ tập trung vào việc triển khai.
+- **Tính chính trực nghề nghiệp:** Cố gắng dự đoán và xử lý triệt để các trường hợp ngoại lệ, duy trì tiêu chuẩn cao ngay cả khi không bị quản lý giám sát rõ ràng.
+- **Tầm nhìn dài hạn:** Ưu tiên việc thu nhận kiến thức, kinh nghiệm thực tế và mạng lưới quan hệ hơn là lợi ích tài chính ngắn hạn trong giai đoạn đầu sự nghiệp.
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+#### 4. Phương Pháp BMAD cho SDLC có Hỗ Trợ AI
 
-#### Event-Driven Architecture
-
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
-
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
-
-### Những Gì Học Được
-
-#### Tư Duy Thiết Kế
-
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
-
-#### Kiến Trúc Kỹ Thuật
-
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
-
-#### Chiến Lược Hiện Đại Hóa
-
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+- **Hạn chế Cửa sổ Ngữ cảnh:** Việc prompting không có cấu trúc và liên tục dẫn đến tràn Cửa sổ Ngữ cảnh, gây ra Ảo giác và mã nguồn phân mảnh, không sử dụng được.
+- **AI Agent theo Vai trò:** Phương pháp BMAD giảm thiểu điều này bằng cách gán các vai trò SDLC riêng biệt cho các AI Agent chuyên biệt:
+    - **PM Agent:** Tạo PRD (Tài liệu Yêu cầu Sản phẩm).
+    - **Architect Agent:** Xây dựng Kiến trúc Hệ thống.
+    - **BA Agent:** Phân rã yêu cầu thành các Epic và Story chi tiết.
+    - **Developer & QA Agents:** Tạo và kiểm thử lặp lại mã cho các story riêng biệt.
+- **Lợi ích Kiến trúc:** Cô lập các nhiệm vụ đảm bảo đầu ra chính xác, giảm thiểu chồng chéo ngữ cảnh và tạo ra các thành phần phần mềm sẵn sàng sản xuất.
 
 ### Ứng Dụng Vào Công Việc
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+- **Tối ưu Tương tác LLM:** Triển khai Chuỗi Suy nghĩ và các mẫu prompt có cấu trúc cho tất cả các nhiệm vụ phát triển có hỗ trợ AI.
+- **Áp dụng Kiến trúc Serverless:** Thử nghiệm kết hợp AWS Lambda, Amazon API Gateway và Amazon Bedrock cho các thành phần ứng dụng có khả năng mở rộng.
+- **Củng cố Kiến thức Cốt lõi:** Dành các buổi học tập trung vào các nguyên lý hạ tầng cơ bản, chủ động tránh phụ thuộc vào AI cho logic nền tảng.
+- **Triển khai BMAD trong Dự án:** Cấu trúc các bài tập lập trình tương lai bằng cách xác định vai trò và ranh giới ngữ cảnh rõ ràng trước khi tạo mã với AI Agents.
 
 ### Trải nghiệm trong event
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+Tham dự **"FCAJ Community Day"** là một trải nghiệm vô cùng truyền cảm hứng, mở rộng góc nhìn của tôi về cả khía cạnh kỹ thuật và tâm lý khi làm việc trong ngành công nghiệp đám mây. Những suy ngẫm chính bao gồm:
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+#### Tâm lý Học tập & Động lực
+- Buổi chia sẻ của Mr. Huynh Hoang Long về điều tiết dopamine đã cho tôi hiểu biết khoa học về cách xây dựng thói quen học tập nhất quán. Quy tắc 2 Phút và chiến lược chia nhỏ nhiệm vụ có thể áp dụng ngay vào thói quen học tập hàng ngày của tôi.
+- Các khái niệm gamification như duy trì chuỗi ngày đã thay đổi cách tôi tiếp cận việc học các dịch vụ AWS - những gì từng cảm thấy quá sức giờ đây giống như một trò chơi có cấu trúc.
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+#### Phát triển Kỹ thuật
+- Buổi Prompt Engineering của Mr. Thinh Nguyen thực sự mở mang tầm mắt. Hiểu các kỹ thuật như Chuỗi Suy nghĩ và Cây Suy nghĩ đã thay đổi căn bản cách tôi tương tác với LLM để lập trình và giải quyết vấn đề.
+- Nhìn thấy kiến trúc Serverless thực tế kết hợp S3, CloudFront, Cognito, API Gateway, Lambda, Bedrock và DynamoDB đã cho tôi một bản thiết kế cụ thể để thiết kế các ứng dụng hỗ trợ AI.
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
+#### Góc nhìn Nghề nghiệp
+- Sự nhấn mạnh vào "Nền tảng quan trọng hơn Công cụ" đã gây ấn tượng sâu sắc. AI có thể tăng tốc việc học, nhưng không thể thay thế sự hiểu biết sâu sắc về các nguyên lý kỹ thuật.
+- Buổi thảo luận nghề nghiệp đã củng cố tầm quan trọng của việc đặt câu hỏi "tại sao" đằng sau mỗi quyết định kỹ thuật, duy trì tính chính trực nghề nghiệp và ưu tiên sự phát triển hơn lợi ích ngắn hạn trong giai đoạn đầu sự nghiệp.
 
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
-
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
+#### Phương pháp BMAD
+- Tìm hiểu về phương pháp BMAD đã cung cấp một khuôn khổ thực tế để tận dụng AI Agents trong phát triển phần mềm mà không mất kiểm soát về chất lượng mã và kiến trúc.
+- Cách tiếp cận dựa trên vai trò (PM, Architect, BA, Developer, QA) phản ánh cấu trúc nhóm thực tế và làm cho việc phát triển có hỗ trợ AI trở nên có cấu trúc và đáng tin cậy hơn.
 
 #### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+*Thêm các hình ảnh của các bạn tại đây*
+
+> Tổng thể, FCAJ Community Day không chỉ là một sự kiện kỹ thuật - đó là một trải nghiệm toàn diện kết hợp tâm lý học, sự xuất sắc về kỹ thuật, trí tuệ nghề nghiệp và các thực hành AI tiên tiến sẽ định hình cách tiếp cận của tôi đối với điện toán đám mây và phát triển chuyên môn trong tương lai.

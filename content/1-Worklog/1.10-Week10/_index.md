@@ -12,46 +12,28 @@ pre: " <b> 1.10. </b> "
 
 ### Week 10 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Implement Booking module screens: Booking Page and My Bookings.
+* Build booking detail view with status timeline.
+* Develop cancel booking functionality with confirmation flow.
+* Implement booking status state machine management.
+* Integrate real-time booking updates via WebSocket.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | ---- | ---------- | --------------- | ------------------ |
+| 2 | - **Booking Page**: <br>&emsp; + Design date/time picker with available slots display <br>&emsp; + Build guest count selector and special requests input <br>&emsp; + Implement real-time availability checking to prevent double bookings <br>&emsp; + Add price summary and confirmation step before submission <br>&emsp; + Connect to POST /bookings API endpoint with form validation | 19/06/2026 | 19/06/2026 | React DatePicker, Zod Validation |
+| 3 | - **My Bookings Page**: <br>&emsp; + Create booking list with status tabs: All, Pending, Confirmed, Cancelled, Completed <br>&emsp; + Implement sorting by date, status, and place name <br>&emsp; + Build booking card component with place image, date, status badge, and action buttons <br>&emsp; + Add empty state illustrations for each tab <br>&emsp; + Connect to GET /bookings?user_id=me API endpoint with pagination | 20/06/2026 | 20/06/2026 | React Query Pagination, Tailwind Tabs |
+| 4 | - **Booking Detail Page**: <br>&emsp; + Design detail layout with place info, booking info, and status timeline <br>&emsp; + Build status stepper component: Pending → Confirmed → Completed (or Cancelled) <br>&emsp; + Add booking modification options based on current status <br>&emsp; + Implement QR code generation for booking confirmation <br>&emsp; + Connect to GET /bookings/:id API endpoint | 21/06/2026 | 21/06/2026 | QR Code Library, Timeline UI |
+| 5 | - **Cancel Booking Flow**: <br>&emsp; + Build confirmation dialog with cancellation reason options <br>&emsp; + Implement business logic: only Pending/Confirmed bookings can be cancelled <br>&emsp; + Add refund policy display for confirmed booking cancellations <br>&emsp; + Implement optimistic UI update with rollback on failure <br>&emsp; + Connect to PATCH /bookings/:id/cancel API endpoint | 22/06/2026 | 22/06/2026 | React Modal, Optimistic Updates |
+| 6 | - **Booking Status Lifecycle**: <br>&emsp; + Implement state machine: Pending → Confirmed (by business owner), Pending → Cancelled (by user), Confirmed → Completed (after booking date), Confirmed → Cancelled (by user) <br>&emsp; + Add Socket.io listener for real-time status changes <br>&emsp; + Build toast notifications for status updates <br>&emsp; + Write automated tests for all status transitions <br> - End-to-end testing of full booking flow | 23/06/2026 | 23/06/2026 | XState (state machine), Socket.io, React Hot Toast |
 
 
 ### Week 10 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* ✅ **Booking Page** fully functional with date/time picker, real-time availability checking, guest selection, and multi-step booking flow.
+* ✅ **My Bookings** page completed with tab-based filtering (5 status tabs), infinite scroll pagination, and responsive card layout.
+* ✅ **Booking Detail** page delivering comprehensive booking information, visual status timeline stepper, and QR code for easy check-in.
+* ✅ **Cancel Booking** flow implemented with reason collection, business rule validation (only Pending/Confirmed status), and optimistic UI updates.
+* ✅ **Status Lifecycle State Machine** correctly handling all 4 transitions with real-time WebSocket updates and toast notifications.
+* ✅ Wrote 40+ unit tests for booking logic and 15 integration tests for the full booking flow from creation to completion.
+* ✅ All Booking screens deployed to staging and passing QA review with zero critical bugs.

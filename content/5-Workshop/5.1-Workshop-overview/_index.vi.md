@@ -1,19 +1,52 @@
 ---
-title : "Giới thiệu"
-date : 2024-01-01 
-weight : 1
-chapter : false
-pre : " <b> 5.1. </b> "
+title: "Tổng quan"
+date: 2024-01-01
+weight: 1
+chapter: false
+pre: " <b> 5.1. </b> "
 ---
+{{% notice warning %}}
+⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
+{{% /notice %}}
 
-#### Giới thiệu về VPC Endpoint
+### Mục tiêu Workshop
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+Workshop này hướng dẫn triển khai và vận hành **VTrips**, một nền tảng du lịch **serverless-first** trên AWS. Hệ thống cho phép người dùng đăng ký/đăng nhập, duyệt địa điểm, viết đánh giá, lưu địa điểm, lập lịch trình và xử lý các workflow business/booking.
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+MVP đã triển khai tập trung vào các dịch vụ AWS cốt lõi: AWS Lambda, Amazon API Gateway, Amazon RDS PostgreSQL, Amazon ElastiCache Redis, Amazon S3, IAM, VPC networking và Amazon CloudWatch.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+![Frontend VTrips](/images/5-Workshop/frontend-home.png)
+
+### Các Module Chính
+
+| Module | Chức năng chính | Số API |
+| --- | --- | ---: |
+| Authentication | Đăng ký, đăng nhập, refresh token, khôi phục mật khẩu, hồ sơ | 7 |
+| Places | Duyệt, tìm kiếm, CRUD, tải ảnh, theo dõi lượt xem | 7 |
+| Reviews | Đánh giá, bình chọn hữu ích, báo cáo, phản hồi chủ sở hữu | 7 |
+| Trips | Lưu địa điểm, lập lịch trình, chia sẻ công khai | 12 |
+| Business và Bookings | Claim doanh nghiệp, booking, workflow trạng thái, quản trị | 10 |
+
+Phiên bản hiện tại có **43 API endpoint** đã được ghi nhận.
+
+### Phạm vi Triển khai
+
+MVP sử dụng các thành phần đã cấu hình sau:
+
+* API Gateway làm điểm vào HTTPS công khai.
+* Lambda cho runtime API Node.js/Express và business logic.
+* RDS PostgreSQL cho dữ liệu giao dịch.
+* ElastiCache Redis cho cache và trạng thái ngắn hạn.
+* S3 cho artifacts triển khai và ảnh tải lên.
+* CloudWatch cho logs và chẩn đoán.
+* IAM cho kiểm soát truy cập least-privilege.
+
+Các dịch vụ như CloudFront, Cognito, SQS, SNS, SES, EventBridge, X-Ray, KMS, Secrets Manager, WAF và OpenSearch được xem là các lựa chọn mở rộng production. Chỉ nên khai báo đã triển khai khi môi trường AWS tương ứng đã được cấu hình.
+
+### Tiêu chí Thành công
+
+* Backend build thành công và Lambda được cập nhật với artifact mới.
+* API Gateway gọi Lambda và trả về phản hồi hợp lệ.
+* Lambda kết nối được đến RDS PostgreSQL, Redis và S3 trong môi trường đã triển khai.
+* Frontend có thể gọi API đã triển khai với CORS/token chính xác.
+* Các luồng cốt lõi như đăng nhập, duyệt địa điểm, tạo trip, tải ảnh và kiểm tra log hoạt động đáng tin cậy.

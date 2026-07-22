@@ -1,7 +1,7 @@
 ---
-title: "Blog 2"
+title: "Blog 2 - AWS Well-Architected Framework trong thiết kế hệ thống Cloud"
 date: 2024-01-01
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
@@ -10,118 +10,58 @@ pre: " <b> 3.2. </b> "
 ⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
 {{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Khi triển khai một hệ thống trên nền tảng điện toán đám mây, việc lựa chọn các dịch vụ phù hợp mới chỉ là bước khởi đầu. Để hệ thống có thể vận hành ổn định, đáp ứng tốt nhu cầu của người dùng và dễ dàng mở rộng trong tương lai, kiến trúc tổng thể cần được thiết kế theo những nguyên tắc rõ ràng. Nhằm hỗ trợ các doanh nghiệp và nhà phát triển xây dựng những hệ thống Cloud hiệu quả, Amazon Web Services (AWS) đã xây dựng AWS Well-Architected Framework – bộ khung hướng dẫn thiết kế kiến trúc dựa trên các thực tiễn tốt nhất được đúc kết từ quá trình triển khai và vận hành hạ tầng Cloud trên quy mô toàn cầu.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+AWS Well-Architected Framework không phải là một dịch vụ của AWS mà là một tài liệu hướng dẫn giúp đánh giá và cải thiện chất lượng kiến trúc hệ thống. Bộ khung này được xây dựng dựa trên kinh nghiệm thực tế của AWS cùng phản hồi từ hàng triệu khách hàng đang sử dụng nền tảng Cloud. Mục tiêu của Framework là giúp các tổ chức thiết kế hệ thống có khả năng vận hành ổn định, an toàn, tối ưu chi phí và đáp ứng tốt khi quy mô sử dụng ngày càng mở rộng.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Nền tảng của AWS Well-Architected Framework được xây dựng dựa trên sáu trụ cột, đại diện cho sáu yếu tố quan trọng cần được cân nhắc trong quá trình thiết kế và vận hành hệ thống.
 
----
+## Operational Excellence (Vận hành hiệu quả)
 
-## Hướng dẫn kiến trúc
+Operational Excellence tập trung vào việc xây dựng quy trình vận hành có tính nhất quán và khả năng cải tiến liên tục. AWS khuyến khích tự động hóa các công việc lặp lại như triển khai hạ tầng, cấu hình tài nguyên hay cập nhật ứng dụng nhằm giảm thiểu sai sót do thao tác thủ công.
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+Bên cạnh đó, việc theo dõi nhật ký hoạt động, giám sát hiệu năng và phân tích dữ liệu vận hành giúp nhóm quản trị nhanh chóng phát hiện những bất thường, từ đó đưa ra phương án xử lý phù hợp trước khi ảnh hưởng đến người dùng.
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+## Security (Bảo mật)
 
-**Kiến trúc giải pháp bây giờ như sau:**
+Bảo mật luôn là một trong những ưu tiên hàng đầu khi triển khai hệ thống trên nền tảng Cloud. AWS khuyến nghị áp dụng nhiều lớp bảo vệ nhằm đảm bảo dữ liệu và tài nguyên luôn được kiểm soát chặt chẽ.
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Một số nguyên tắc quan trọng bao gồm quản lý quyền truy cập thông qua AWS Identity and Access Management (IAM), áp dụng nguyên tắc Least Privilege để chỉ cấp đúng quyền cần thiết cho từng người dùng hoặc ứng dụng, sử dụng xác thực đa yếu tố (MFA), mã hóa dữ liệu trong quá trình lưu trữ và truyền tải, đồng thời giám sát các hoạt động truy cập để kịp thời phát hiện các dấu hiệu bất thường.
 
----
+Những biện pháp này góp phần giảm thiểu rủi ro về bảo mật và nâng cao khả năng bảo vệ hệ thống trước các mối đe dọa.
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+## Reliability (Độ tin cậy)
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Reliability hướng đến mục tiêu giúp hệ thống duy trì hoạt động ổn định ngay cả khi xảy ra sự cố. AWS khuyến nghị triển khai tài nguyên trên nhiều Availability Zone (AZ) trong cùng một Region để tăng khả năng dự phòng và hạn chế gián đoạn dịch vụ.
 
----
+Ngoài việc xây dựng kiến trúc dự phòng, hệ thống cũng cần có cơ chế sao lưu dữ liệu định kỳ, khôi phục sau thảm họa và tự động mở rộng tài nguyên khi lưu lượng truy cập tăng cao. Những giải pháp này giúp đảm bảo ứng dụng vẫn có thể phục vụ người dùng trong nhiều tình huống khác nhau.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## Performance Efficiency (Hiệu năng)
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Hiệu năng của hệ thống phụ thuộc vào việc lựa chọn đúng tài nguyên và dịch vụ phù hợp với từng nhu cầu sử dụng. AWS cung cấp nhiều loại dịch vụ với các mức cấu hình khác nhau, cho phép doanh nghiệp lựa chọn giải pháp tối ưu về cả hiệu suất và chi phí.
 
----
+Các dịch vụ như AWS Lambda, Amazon CloudFront hay Auto Scaling giúp hệ thống có khả năng mở rộng linh hoạt, giảm độ trễ và cải thiện tốc độ phản hồi khi số lượng người dùng tăng lên. Việc thường xuyên đánh giá hiệu năng cũng giúp doanh nghiệp điều chỉnh tài nguyên phù hợp với từng giai đoạn phát triển.
 
-## The pub/sub hub
+## Cost Optimization (Tối ưu chi phí)
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+Một trong những ưu điểm nổi bật của Cloud Computing là mô hình thanh toán theo mức sử dụng. Tuy nhiên, việc sử dụng tài nguyên không hợp lý có thể làm chi phí vận hành tăng đáng kể.
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+AWS khuyến nghị theo dõi mức sử dụng tài nguyên thường xuyên, loại bỏ các dịch vụ không còn cần thiết, lựa chọn cấu hình phù hợp với khối lượng công việc và sử dụng các công cụ như AWS Cost Explorer hoặc AWS Budgets để kiểm soát ngân sách.
 
----
+Tối ưu chi phí không chỉ là cắt giảm chi tiêu mà còn là sử dụng tài nguyên đúng mục đích để đạt hiệu quả cao nhất.
 
-## Core microservice
+## Sustainability (Phát triển bền vững)
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+Sustainability là trụ cột mới được AWS bổ sung nhằm hướng tới việc sử dụng tài nguyên công nghệ thông tin một cách hiệu quả và thân thiện với môi trường.
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+Việc tối ưu kiến trúc, hạn chế tài nguyên dư thừa, tự động tắt các dịch vụ không sử dụng và lựa chọn giải pháp phù hợp với nhu cầu thực tế sẽ giúp giảm mức tiêu thụ năng lượng cũng như lượng phát thải từ các trung tâm dữ liệu.
 
----
+Đây là xu hướng ngày càng được nhiều doanh nghiệp quan tâm trong quá trình chuyển đổi số và phát triển hạ tầng Cloud.
 
-## Front door microservice
+## Vai trò của AWS Well-Architected Framework trong thiết kế hệ thống Cloud
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+Điểm nổi bật của AWS Well-Architected Framework là cung cấp một góc nhìn tổng thể về kiến trúc hệ thống thay vì chỉ tập trung vào từng dịch vụ riêng lẻ. Sáu trụ cột của Framework có mối liên hệ chặt chẽ với nhau và cần được cân bằng trong suốt vòng đời của ứng dụng.
 
----
+Ví dụ, một hệ thống có hiệu năng cao nhưng thiếu các biện pháp bảo mật sẽ tiềm ẩn nhiều rủi ro. Ngược lại, một hệ thống được đầu tư quá nhiều tài nguyên để đảm bảo hiệu năng nhưng không được tối ưu chi phí sẽ làm giảm hiệu quả khai thác Cloud. Việc đánh giá kiến trúc dựa trên Framework giúp các tổ chức nhận diện những điểm cần cải thiện và xây dựng hệ thống theo các tiêu chuẩn mà AWS khuyến nghị.
 
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+AWS Well-Architected Framework hiện được xem là một trong những tài liệu quan trọng dành cho các kỹ sư Cloud, kiến trúc sư giải pháp và những người đang tìm hiểu về AWS. Việc nghiên cứu bộ khung này không chỉ giúp hiểu rõ hơn về tư duy thiết kế hệ thống trên nền tảng Cloud mà còn tạo nền tảng để áp dụng hiệu quả các dịch vụ AWS trong những dự án thực tế.

@@ -9,23 +9,34 @@ pre: " <b> 5. </b> "
 ⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
 {{% /notice %}}
 
-# Secure Hybrid Access to S3 using VPC Endpoints
+# Workshop
 
-#### Overview
+This chapter presents the workshop for deploying the **VTrips** project on AWS. The content is based on the team workshop README, deployment screenshots, and the system architecture diagram.
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
+The workshop follows a clear progression: project context and goals, architecture description, prerequisites, deployment, validation, product demo, and resource clean-up.
 
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
+**5.1:** [Overview](5.1-Workshop-overview/)
 
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-+ **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-+ **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+Introduces the workshop goal, MVP scope, completed modules, and success criteria for the VTrips system.
 
-#### Content
+**5.2:** [Architecture Description](5.2-Prerequiste/)
 
-1. [Workshop overview](5.1-Workshop-overview)
-2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
-6. [Clean up](5.6-Cleanup/)
+Explains the architecture diagram, system layers, main request flows, AWS services used, security, logging/monitoring, and production evolution path.
+
+**5.3:** [Prerequisite](5.3-S3-vpc/)
+
+Lists the AWS account, IAM permissions, region, local tools, and environment configuration required before deployment.
+
+**5.4:** [Deployment Guide](5.4-S3-onprem/)
+
+Provides the deployment steps for building the backend, preparing the database, packaging Lambda, configuring runtime/API, and publishing the frontend.
+
+**5.5:** [Test & Validation](5.5-Policy/)
+
+Validates the frontend, authentication, APIs, database/cache, image upload, CloudWatch Logs, and common post-deployment issues.
+
+**5.6:** [Demo](5.6-Demo/)
+
+Demonstrates the VTrips product through end-user flows (home page, place search, saved places, trip creation, booking) and business/admin views (dashboard, place verification, admin overview).
+
+**5.7:** [Clean-up](5.7-Cleanup/)
