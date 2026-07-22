@@ -1,5 +1,5 @@
-baseURL = "https://truccaokhuong.github.io/WorkBlogAWS/"
-relativeURLs = false
+baseURL = "https://truccaokhuong.github.io/"
+relativeURLs = true
 canonifyURLs = false
 defaultContentLanguage = "en"
 
