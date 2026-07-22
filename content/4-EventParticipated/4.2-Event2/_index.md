@@ -21,3 +21,7 @@ During the event, the speakers shared insights on a wide range of topics.
 **Trần Minh Quân** discussed DevOps and the hidden issues that can arise in projects. He emphasized that DevOps is not only about tools, but also about people, processes, and effective teamwork.
 
 **Phạm Khắc Uy** spoke about procrastination. His talk showed that procrastination is not always caused by laziness; it can also stem from fear of failure, fear of judgment, or a lack of confidence.
+
+## Event Photo
+
+![Group photo at the AWS community event](/images/events/event-2-group-photo.png)

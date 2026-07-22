@@ -21,3 +21,7 @@ Trong sự kiện, các diễn giả đã chia sẻ nhiều chủ đề khác nh
 **Trần Minh Quân** trình bày về DevOps và các vấn đề ẩn trong dự án. Diễn giả nhấn mạnh rằng DevOps không chỉ là công cụ, mà còn liên quan đến con người, quy trình và cách làm việc nhóm.
 
 **Phạm Khắc Uy** chia sẻ về sự trì hoãn. Nội dung cho thấy trì hoãn thường không chỉ do lười biếng, mà còn xuất phát từ nỗi sợ thất bại, sợ bị đánh giá hoặc thiếu tự tin.
+
+## Hình ảnh sự kiện
+
+![Ảnh tập thể tại sự kiện cộng đồng AWS](/images/events/event-2-group-photo.png)
