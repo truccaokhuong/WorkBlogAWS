@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Workshop
-
 This chapter presents the workshop for deploying the **VTrips** project on AWS. The content is based on the team workshop README, deployment screenshots, and the system architecture diagram.
 
 The workshop follows a clear progression: project context and goals, architecture description, prerequisites, deployment, validation, product demo, and resource clean-up.

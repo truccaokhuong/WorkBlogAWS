@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Workshop
-
 Chương này trình bày workshop triển khai dự án **VTrips** trên AWS. Nội dung dựa trên README workshop của nhóm, ảnh chụp màn hình triển khai và sơ đồ kiến trúc hệ thống.
 
 Workshop được tổ chức theo trình tự rõ ràng: bối cảnh và mục tiêu dự án, mô tả kiến trúc, yêu cầu tiên quyết, triển khai, kiểm thử, demo sản phẩm và dọn dẹp tài nguyên.
