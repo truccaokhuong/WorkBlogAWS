@@ -6,16 +6,11 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+During my internship at Amazon Web Services Vietnam Co., Ltd. from 17/04/2026 to 10/07/2026, my team of five members had the opportunity to learn, practice, and apply knowledge of AWS Cloud Computing and Web Development in a practical project development environment through the Travel Platform topic.
 
-During my internship at **[Company/Organization Name]** from **[start date]** to **[end date]**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in **[briefly describe the main project or task]**, through which I improved my skills in **[list skills: programming, analysis, reporting, communication, etc.]**.  
+As the member responsible for Trip Planner Service, I directly participated in designing and developing both the Back-end using AWS CDK, DynamoDB Single Table, AWS Lambda, SQS/SNS and the Front-end for Saved Places, Trips, and Itinerary screens. Through this process, I significantly improved my service-oriented programming skills, serverless system design mindset on AWS Cloud, and teamwork ability.
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
-
-To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
+To objectively reflect on my contribution to the project, I would like to evaluate myself based on the criteria below:
 
 | No. | Criteria                            | Description                                                                                      | Good | Fair | Average |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
@@ -34,6 +29,6 @@ To objectively reflect on my internship period, I would like to evaluate myself 
 
 ### Needs Improvement
 
-* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization  
-* Improve problem-solving thinking  
-* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively
+* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization.
+* Improve problem-solving thinking.
+* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively.
