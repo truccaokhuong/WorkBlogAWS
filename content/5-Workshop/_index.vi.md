@@ -30,8 +30,8 @@ Hướng dẫn biên dịch hệ thống phía máy chủ, chuẩn bị cơ sở
 
 Kiểm tra giao diện, xác thực người dùng, API, cơ sở dữ liệu, bộ nhớ đệm, tải ảnh, nhật ký CloudWatch và các vấn đề thường gặp sau triển khai.
 
-**5.6:** [Trình diễn](5.6-Demo/)
+**5.6:** [Demo](5.6-Demo/)
 
-Trình diễn VTrips qua luồng người dùng cuối và luồng dành cho doanh nghiệp, quản trị viên.
+Demo VTrips qua hai nhóm chức năng: User và Business & Admin.
 
 **5.7:** [Dọn dẹp](5.7-Cleanup/)
